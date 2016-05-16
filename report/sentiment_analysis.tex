@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+	
+\title{Analyse de sentiments}
+\author{Frédéric \textsc{Wantiez} -- Pierre \textsc{Vigier}}
+
+\begin{document}
+
+\maketitle
+
+\section{Description du problème}
+
+L'analyse de sentiments est un problème d'apprentissage supervisé. Notons $W$ l'ensemble de tous les mots possibles et $W^{*}=\cup_{n \geq 0}{W^{n}}$ l'ensemble des textes sur ce vocabulaire. Soit $x_{1}, ..., x_{N} \in W^{*}$ des textes et $y_{1}, ..., y_{N} \in S$ le sentiment associé à chacun des textes. Ces sentiments peuvent être des valeurs dans $S=[0, 1]$ où $0$ signifie que le texte est "très négatif" et $1$, "très positif". Une variante plus simple est d'avoir les $(y_{i})_{i \in {1, ..., N}}$ dans $S={0, 1}$ où 0 signifie "négatif" et $1$, "positif". Notre objectif est de déterminer une fonction $f$ telle que $\forall i \in {1, ..., N}, y_{i} \approx f(x_{i})$ et qui devra, de plus, bien généraliser sur des textes jamais vus auparavant. Dans le cas où S est fini, il s'agit d'un problème de classification. Dans le cas contraire, il s'agit d'un problème de régression.
+
+Nous allons essentiellement nous concentrer sur le problème de classification. Plusieurs types d'entrée et plusieurs types de classifieurs seront essayés sur le problème. La mesure de performance choisie est la précision $A(y_{1}, ..., y_{N}, \hat{y}_{1}, ..., \hat{y}_{N}) = \frac{\sum_{i=0}^{N}{1_{y_{i}=\hat{y}_{i}}}}{N}$. L'objectif est de la maximiser. Elle nous permettra de comparer les performances des différents algorithmes.
+
+% Technologies qu'on utilise ? (Python, sklearn, scipy, tensorflow, ...)
+
+\section{Ensemble de données}
+
+Il est assez facile de créer un ensemble de données pour entraîner nos algorithmes. En effet, il suffit de trouver un site où l'on peut commenter et mettre des notes sur des produits. La valeur numérique de la note correspond alors au sentiment dégagé par le texte. Cette configuration est présente sur les sites d'e-commerce comme Amazon ou sur les sites de critiques comme IMDB ou Rotten Potatoes.
+
+% Comment on détermine le sentiment sur les tweets ?
+
+% Parler et mettre le liens vers l'article traitant de l'ensemble de données d'IMDB et de Kaggle
+
+\section{Méthodologie}
+
+\section{Premiers essais}
+
+La première difficulté lorsque l'on travaille sur des textes est que leur longueur n'est pas fixe. La plupart des classifieurs nécessite des entrées de taille fixe. Il faut alors trouver une représentation de nos textes de taille fixe. Les représentations les plus populaires sont les sacs de mots et les vecteurs de mot. Dans chaque cas, nous allons décrire la représentation puis la tester en l'utilisant avec différents classifieurs. Ceci devrait nous donner une idée de l'efficacité de chaque représentation.
+
+\subsection{Sac de mots}
+
+% Citer la première utilisation des sacs de mots
+
+Les sacs de mots est une représentation très simple. Numérotons les éléments de $W$, on a alors $W={w_{1}, ..., w_{M}}$. Le sac de mots d'un texte $T \in W^{*}$ est un vecteur de $\mathbb{R}^{M}$ 
+
+\subsection{Vecteurs de mots}
+
+% Article de Mikolov
+
+\subsection{Conclusion}
+
+% Il est possible de booster en faisant de l'apprentissage d'ensemble
+
+% Il est nécessaire de prendre en compte l'ordre des mots
+
+\section{Prise en compte de l'ordre des mots}
+
+\section{Conclusion}
+
+\section{Bibliographie}
+
+
+\end{document}
