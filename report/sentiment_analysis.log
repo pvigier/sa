@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.6)  14 MAY 2016 00:05
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.6)  20 MAY 2016 00:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -440,52 +440,57 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 14.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 18.
+(Font)              <10> on input line 22.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 18.
+(Font)              <7> on input line 22.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 18.
+(Font)              <5> on input line 22.
 
-Overfull \hbox (19.25888pt too wide) in paragraph at lines 20--21
+Overfull \hbox (19.25888pt too wide) in paragraph at lines 24--25
 \T1/lmr/m/n/10 pro-blème. La me-sure de per-for-mance choi-sie est la pré-ci-si
 on $\OML/lmm/m/it/10 A\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 y[]; :::; y[]; []; :::;
  []\OT1/lmr/m/n/10 ) =
  []
 
-! Too many }'s.
-l.22 \{Technologie qu'on utilise ?}
-                                   
-You've closed more groups than you opened.
-Such booboos are generally harmless, so keep going.
-
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(./sentiment_analysis.aux) ) 
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 61.
+
+(/usr/share/texmf/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+(./sentiment_analysis.bbl [2]) [3] (./sentiment_analysis.aux) ) 
 Here is how much of TeX's memory you used:
- 2542 strings out of 494958
- 31054 string characters out of 6179214
- 84619 words of memory out of 5000000
- 5736 multiletter control sequences out of 15000+600000
- 46490 words of font info for 52 fonts, out of 8000000 for 9000
+ 2596 strings out of 494958
+ 31862 string characters out of 6179214
+ 86619 words of memory out of 5000000
+ 5782 multiletter control sequences out of 15000+600000
+ 56865 words of font info for 56 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 27i,6n,26p,947b,241s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/us
-r/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvip
-s/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/sha
-re/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/public/lm/l
-mbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf
-/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi1
-0.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi5.pfb></usr/share/texmf/fonts
-/type1/public/lm/lmmi7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></
-usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share
-/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/l
-msy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb>
-Output written on sentiment_analysis.pdf (1 page, 184154 bytes).
+ 27i,6n,26p,948b,283s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texm
+f/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{
+/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/d
+vips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/
+share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/publ
+ic/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/shar
+e/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/l
+m/lmmi5.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.
+pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/
+share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publ
+ic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/
+texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/symbols/msbm10.pfb>
+Output written on sentiment_analysis.pdf (3 pages, 241029 bytes).
 PDF statistics:
- 67 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 85 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

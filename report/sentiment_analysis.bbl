@@ -1,0 +1,11 @@
+\begin{thebibliography}{1}
+
+\bibitem{maas-EtAl:2011:ACL-HLT2011}
+Andrew~L. Maas, Raymond~E. Daly, Peter~T. Pham, Dan Huang, Andrew~Y. Ng, and
+  Christopher Potts.
+\newblock Learning word vectors for sentiment analysis.
+\newblock In {\em Proceedings of the 49th Annual Meeting of the Association for
+  Computational Linguistics: Human Language Technologies}, pages 142--150,
+  Portland, Oregon, USA, June 2011. Association for Computational Linguistics.
+
+\end{thebibliography}
