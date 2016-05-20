@@ -51,19 +51,19 @@ def predict(algorithm='rf'):
     model = Word2Vec.load(model_name)
 
     clean_train_reviews = get_clean_reviews(train['review'])
-    train_data_features = get_features(clean_train_reviews, model, num_features)
+    train_features = get_features(clean_train_reviews, model, num_features)
 
-    classifier = train_classifier(algorithm, train_data_features, train)
+    classifier = train_classifier(algorithm, train_features, train)
 
     # Free memory !
     del train
     del clean_train_reviews
-    del train_data_features
+    del train_features
 
     test = get_reviews('data/imdb/test_data.csv')
     clean_test_reviews = get_clean_reviews(test['review'])
-    test_data_features = get_features(clean_test_reviews, model, num_features)
+    test_features = get_features(clean_test_reviews, model, num_features)
 
-    evaluate(test_data_features, test, classifier)
+    evaluate(test_features, test, classifier)
 
 predict('lr')

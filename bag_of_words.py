@@ -1,6 +1,5 @@
 import pickle
 import os
-import sys
 from sklearn.feature_extraction.text import CountVectorizer
 from util import *
 
@@ -30,20 +29,20 @@ def get_bag_of_words(reviews, filename, vectorizer=None):
     return pickle.load(open(filename, 'rb')), vectorizer
 
 
-def predict(algorithm='rf'):
+def predict(algorithm):
     train = get_reviews('data/imdb/train_data.csv')
-    train_data_features, vectorizer = get_bag_of_words(train, 'data/imdb/train_data_bow.pickle')
+    train_features, vectorizer = get_bag_of_words(train, 'data/imdb/train_data_bow.pickle')
 
-    classifier = train_classifier(algorithm, train_data_features, train)
+    classifier = train_classifier(algorithm, train_features, train)
 
     print('Free memory...')
     del train
-    del train_data_features
+    del train_features
 
     test = get_reviews('data/imdb/test_data.csv')
-    test_data_features, _ = get_bag_of_words(test, 'data/imdb/test_data_bow.pickle', vectorizer)
+    test_features, _ = get_bag_of_words(test, 'data/imdb/test_data_bow.pickle', vectorizer)
 
-    evaluate(test_data_features, test, classifier)
+    evaluate(test_features, test, classifier)
 
 def get_words_weights():
     filename = 'models/bow-lr.pickle'
@@ -51,14 +50,14 @@ def get_words_weights():
         train = get_reviews('data/imdb/train_data.csv')
         clean_train_reviews = clean_reviews(train['review'], join_words=True)
         vectorizer = train_vectorizer(clean_train_reviews)
-        train_data_features = get_features(clean_train_reviews, vectorizer)
-        classifier = train_classifier('lr', train_data_features, train)
+        train_features = get_features(clean_train_reviews, vectorizer)
+        classifier = train_classifier('lr', train_features, train)
         with open(filename, 'wb') as f:
             pickle.dump((vectorizer, classifier), f)
         print('Free memory...')
         del train
         del clean_train_reviews
-        del train_data_features
+        del train_features
     else:
         print('Training skipped - ' + filename + ' exists')
 
@@ -79,4 +78,13 @@ def get_words_weights():
         for i, (word, sentiment) in enumerate(positive):
             print('{}. {} ({})'.format(i+1, word, sentiment))
 
-predict('mb')
+def get_learning_curve(algorithm):
+    train = get_reviews('data/imdb/train_data.csv')
+    train_features, vectorizer = get_bag_of_words(train, 'data/imdb/train_data_bow.pickle')
+
+    test = get_reviews('data/imdb/test_data.csv')
+    test_features, _ = get_bag_of_words(test, 'data/imdb/test_data_bow.pickle', vectorizer)
+
+    show_learning_curve(algorithm, train_features, train, test_features, test)
+
+get_learning_curve('lr')

@@ -1,12 +1,15 @@
 import re
 import pandas as pd
+import numpy as np
 import nltk
+import random
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, confusion_matrix
+import matplotlib.pyplot as plt
 
 # Loading dataset
 
@@ -67,7 +70,7 @@ def get_sentences(reviews):
 
 # Learning
 
-def train_classifier(algorithm, data_features, train):
+def train_classifier(algorithm, features, train):
     print('Train classifier...')
     estimators = []
     if 'rf' in algorithm:
@@ -78,20 +81,47 @@ def train_classifier(algorithm, data_features, train):
         estimators.append(('mb', MultinomialNB()))
     # Training
     classifier = VotingClassifier(estimators=estimators, voting='soft')
-    classifier.fit(data_features, train['sentiment'])
+    classifier.fit(features, train['sentiment'])
     return classifier
 
 # Outputs
 
-def predict(data_features, test, classifier, path):
+def predict(features, test, classifier, path):
     print('Predict...')
-    results = classifier.predict(data_features)
+    results = classifier.predict(features)
     output = pd.DataFrame(data={'id': test['id'], 'sentiment': results})
     output.to_csv(path, index=False, quoting=3)
 
-def evaluate(data_features, test, classifier):
+def evaluate(features, test, classifier):
     print('Evaluate...')
-    results = classifier.predict(data_features)
+    results = classifier.predict(features)
     print('Accuracy:', accuracy_score(test['sentiment'], results))
     print('Confusion matrix:')
     print(confusion_matrix(test['sentiment'], results))
+
+def shuffle_both(features, df):
+    index = list(df.index)
+    random.shuffle(index)
+    shuffled_df = df.reindex(index)
+    shuffled_features = np.zeros(features.shape)
+    for i, j in enumerate(index):
+        shuffled_features[i,:] = features[j,:]
+    return shuffled_features, shuffled_df
+
+def show_learning_curve(algorithm, train_features, train, test_features, test):
+    x, y = [], []
+    train_features, train = shuffle_both(train_features, train)
+    steps = [(10, 100), (100, 1000), (1000, 25001)]
+    for step, lim in steps:
+        for batch_size in range(step, lim, step):
+            print('Batch size:', batch_size)
+            classifier = train_classifier(algorithm, train_features[:batch_size], train[:batch_size])
+            results = classifier.predict(test_features)
+            x.append(batch_size)
+            y.append(accuracy_score(test['sentiment'], results))
+            print('Accuracy:', y[-1])
+    plt.plot(x, y)
+    plt.xlabel('training set size')
+    plt.ylim(0, 1)
+    plt.ylabel('accuracy')
+    plt.show()
