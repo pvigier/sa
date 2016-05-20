@@ -5,14 +5,18 @@ from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+# Loading dataset
+
+def get_reviews(path):
+    return pd.read_csv(path, header=0)
 
 # Preprocessing
 
 stops = set(stopwords.words("english"))
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-
-def get_reviews(path):
-    return pd.read_csv(path, header=0, delimiter='\t', quoting=3 )
 
 def remove_html(s):
     return BeautifulSoup(s, 'lxml').get_text()
@@ -32,7 +36,7 @@ def review_to_words(review, keep_stop_words=False):
         words = remove_stop_words(words)
     return words
 
-def clean_reviews(reviews, keep_stop_words=False, join_words=False):
+def get_clean_reviews(reviews, keep_stop_words=False, join_words=False):
     print('Cleaning and parsing the set of movie reviews...')
     clean_train_reviews = []
     for i, review in enumerate(reviews):
@@ -63,28 +67,31 @@ def get_sentences(reviews):
 
 # Learning
 
-def train_random_forest(data_features, train):
-    print('Train random forest...')
-    forest = RandomForestClassifier(n_estimators=100)
-    forest.fit(data_features, train['sentiment'])
-    return forest
-
-def train_logistic_regression(data_features, train):
-    print('Train logistic regression classifier...')
-    classifier = LogisticRegression()
+def train_classifier(algorithm, data_features, train):
+    print('Train classifier...')
+    estimators = []
+    if 'rf' in algorithm:
+        estimators.append(('rf', RandomForestClassifier(n_estimators=100)))
+    if 'lr' in algorithm:
+        estimators.append(('lr', LogisticRegression()))
+    if 'mb' in algorithm:
+        estimators.append(('mb', MultinomialNB()))
+    # Training
+    classifier = VotingClassifier(estimators=estimators, voting='soft')
     classifier.fit(data_features, train['sentiment'])
     return classifier
 
-def train_voting(data_features, train):
-    print('Train voting classifier...')
-    rf = RandomForestClassifier(n_estimators=100)
-    lr = LogisticRegression()
-    classifier = VotingClassifier(estimators=[('rf', rf), ('lr', lr)], voting='soft')
-    classifier.fit(data_features, train['sentiment'])
-    return classifier
+# Outputs
 
 def predict(data_features, test, classifier, path):
     print('Predict...')
-    result = classifier.predict(data_features)
-    output = pd.DataFrame(data={'id': test['id'], 'sentiment': result})
+    results = classifier.predict(data_features)
+    output = pd.DataFrame(data={'id': test['id'], 'sentiment': results})
     output.to_csv(path, index=False, quoting=3)
+
+def evaluate(data_features, test, classifier):
+    print('Evaluate...')
+    results = classifier.predict(data_features)
+    print('Accuracy:', accuracy_score(test['sentiment'], results))
+    print('Confusion matrix:')
+    print(confusion_matrix(test['sentiment'], results))
