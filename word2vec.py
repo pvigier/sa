@@ -121,8 +121,8 @@ def read_data():
         data = tf.compat.as_str(f.read(f.namelist()[0])).split()
     return data
 
-filename = 'models/wordvect-128.pickle'
+filename = 'models/wordvect-300.pickle'
 #words = read_data()
-#word2vec(words, 50000, 128, 128, 1, filename)
+#word2vec(words, 50000, 100, 128, 1, filename)
 labels, embeddings = pickle.load(open(filename, 'rb'))
 show_tsne(labels, embeddings)
