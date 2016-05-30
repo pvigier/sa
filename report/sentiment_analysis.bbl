@@ -8,4 +8,9 @@ Andrew~L. Maas, Raymond~E. Daly, Peter~T. Pham, Dan Huang, Andrew~Y. Ng, and
   Computational Linguistics: Human Language Technologies}, pages 142--150,
   Portland, Oregon, USA, June 2011. Association for Computational Linguistics.
 
+\bibitem{Salton:1986:IMI:576628}
+Gerard Salton and Michael~J. McGill.
+\newblock {\em Introduction to Modern Information Retrieval}.
+\newblock McGraw-Hill, Inc., New York, NY, USA, 1986.
+
 \end{thebibliography}

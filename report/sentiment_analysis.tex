@@ -5,6 +5,7 @@
 \usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{pgf,tikz}
 	
 \title{Analyse de sentiments}
 \author{Frédéric \textsc{Wantiez} -- Pierre \textsc{Vigier}}
@@ -19,7 +20,7 @@
 
 \subsection{Formalisation}
 
-L'analyse de sentiments est un problème d'apprentissage supervisé. Notons $V$ l'ensemble de tous les mots possibles et $V^{*}=\cup_{n \geq 0}{V^{n}}$ l'ensemble des textes sur ce vocabulaire. Soit $x_{1}, ..., x_{N} \in V^{*}$ des textes et $y_{1}, ..., y_{N} \in S$ le sentiment associé à chacun des textes. Ces sentiments peuvent être des valeurs dans $S=[0, 1]$ où $0$ signifie que le texte est "très négatif" et $1$, "très positif". Une variante plus simple est d'avoir les $(y_{i})_{i \in {1, ..., N}}$ dans $S={0, 1}$ où 0 signifie "négatif" et $1$, "positif". Notre objectif est de déterminer une fonction $f$ telle que $\forall i \in {1, ..., N}, y_{i} \approx f(x_{i})$ et qui devra, de plus, bien généraliser sur des textes jamais vus auparavant. Dans le cas où S est discret, il s'agit d'un problème de classification. Dans le cas continu, il s'agit d'un problème de régression.
+L'analyse de sentiments est un problème d'apprentissage supervisé. Notons $V$ l'ensemble de tous les mots possibles et $V^{*}=\cup_{n \geq 0}{V^{n}}$ l'ensemble des textes sur ce vocabulaire. Soit $x_{1}, ..., x_{N} \in V^{*}$ des textes et $y_{1}, ..., y_{N} \in S$ le sentiment associé à chacun des textes. Ces sentiments peuvent être des valeurs dans $S=[0, 1]$ où $0$ signifie que le texte est "très négatif" et $1$, "très positif". Une variante plus simple est d'avoir les $(y_{i})_{i \in {1, ..., N}}$ dans $S={0, 1}$ où 0 signifie "négatif" et $1$, "positif". Notre objectif est de déterminer une fonction $f$ telle que $\forall i \in {1, ..., N}, y_{i} \approx f(x_{i})$ et qui devra, de plus, bien généraliser sur des textes jamais vus auparavant. Dans le cas où $S$ est discret, il s'agit d'un problème de classification. Dans le cas continu, il s'agit d'un problème de régression.
 
 Nous allons essentiellement nous concentrer sur le problème de classification. Plusieurs types d'entrée et plusieurs types de classifieurs seront essayés sur le problème. La mesure de performance choisie est la précision $A(y_{1}, ..., y_{N}, \hat{y}_{1}, ..., \hat{y}_{N}) = \frac{\sum_{i=0}^{N}{1_{y_{i}=\hat{y}_{i}}}}{N}$. L'objectif est de la maximiser. Elle nous permettra de comparer les performances des différents algorithmes.
 
@@ -29,33 +30,133 @@ Il est assez facile de créer un ensemble de données pour entraîner nos algori
 
 % Comment on détermine le sentiment sur les tweets ?
 
-Nous utilisons l'ensemble de données mis à disposition par Maas et al. \cite{maas-EtAl:2011:ACL-HLT2011}. Il s'agit d'un ensemble de 50 000 avis en anglais sur IMDB. À chaque avis est associé un label $0$ ou $1$ selon que l'avis est positif ou négatif.
+Nous utilisons l'ensemble de données mis à disposition par Maas et al. \cite{maas-EtAl:2011:ACL-HLT2011}. Il s'agit d'un ensemble de 50 000 avis en anglais sur IMDB. Il est découpé en un ensemble d'apprentissage et un ensemble de test. À chaque avis est associé un label $0$ ou $1$ selon que l'avis est positif ou négatif. Le label $0$ correspond à une note inférieure à $4$ tandis que le label $1$ correspond à une note supérieure à $7$. Les notes de $5$ et $6$ sont exclues car représentant un avis neutre. Il y a autant d'avis positifs que d'avis négatifs dans l'ensemble d'apprentissage ainsi que dans l'ensemble de test. Dans la figure \ref{example_imdb}, on retrouve un avis négatif et un avis positif. On remarque que des fragments de code HTML et des libertés typographiques peuvent être présents.
 
-% Afficher un exemple d'avis
-
-% Parler et mettre le liens vers l'article traitant de l'ensemble de données d'IMDB et de Kaggle
+\begin{figure}
+\begin{center}
+\begin{tabular}{|c|c|p{80mm}|}
+	\hline
+	id & sentiment & review \\
+	\hline
+	\texttt{0\_3} & \texttt{0} & \texttt{Story of a man who has unnatural feelings for a pig. Starts out with a opening scene that is a terrific example of absurd comedy. A formal orchestra audience is turned into an insane, violent mob by the crazy chantings of it's singers. Unfortunately it stays absurd the WHOLE time with no general narrative eventually making it just too off putting. Even those from the era should be turned off. The cryptic dialogue would make Shakespeare seem easy to a third grader. On a technical level it's better than you might think with some good cinematography by future great Vilmos Zsigmond. Future stars Sally Kirkland and Frederic Forrest can be seen briefly.} \\
+	\hline
+	\texttt{9999\_8} & \texttt{1} & \texttt{The plot had some wretched, unbelievable twists. However, the chemistry between Mel Brooks and Leslie Ann Warren was excellent. The insight that she comes to, ""There are just moments,"" provides a philosophical handle by which anyone could pick up, and embrace, life.<br /><br />That was one of several moments that were wonderfully memorable.} \\
+	\hline
+\end{tabular}
+\caption{Exemple d'un commentaire négatif et d'un commentaire positif extrait de l'ensemble d'apprentissage.}
+\label{example_imdb}
+\end{center}
+\end{figure}
 
 \subsection{Méthodologie}
 
-% Technologies qu'on utilise ? (Python, sklearn, scipy, tensorflow, ...)
+Afin de mener notre étude, nous avons choisi d'utiliser le langage Python (version 3.5) qui a l'avantage de présenter un écosystème de technologies liées à l'apprentissage automatique qui est développé et accessible. Nous utiliserons notamment les libraires suivantes :
+\begin{itemize}
+	\item \textit{pandas} pour manipuler et analyser des données ;
+	\item \textit{Numpy} pour l'algèbre linéaire ; 
+	\item \textit{Matplotlib} pour les graphiques ;
+	\item \textit{scikit-learn} pour les algorithmes d'apprentissage automatique ;
+	\item \textit{TensorFlow} pour les réseaux de neurones ;
+	\item \textit{NLTK} pour manipuler le langage naturel.
+\end{itemize}
+
+Nous allons devoir faire face à plusieurs difficultés. Premièrement, nous devons prétraiter les avis en enlevant le code HTML. Nous devrons aussi réussir à modéliser les avis, qui sont des chaînes de caractères de taille variable, par des caractéristiques permettant d'utiliser des algorithmes d'apprentissage. La plupart d'entre eux nécessitant des entrées de taille fixe et numériques. Finalement, nous verrons que réussir à modéliser l'ordre des mots sera une nécessité pour atteindre améliorer la précision de la classification.
+
+Notre démarche est assez simple, nous allons procéder par complexité croissante. Nous allons commencer par utiliser les modèles et algorithmes les plus "naïfs" puis analyser faiblesses de chaque  méthode afin d'avancer et proposer des solutions pour améliorer nos résultats.
 
 \section{Premières tentatives}
 
-La première difficulté lorsque l'on travaille sur des textes est que leur longueur n'est pas fixe. La plupart des classifieurs nécessite des entrées de taille fixe. Il faut alors trouver une représentation de nos textes de taille fixe. Les représentations les plus populaires sont les sacs de mots et les vecteurs de mot. Dans chaque cas, nous allons décrire la représentation puis la tester en l'utilisant avec différents classifieurs. Ceci devrait nous donner une idée de l'efficacité de chaque représentation.
+Nous allons commencer par utiliser deux représentations pour nos textes, la première étant les sacs de mots et la seconde se basant sur les vecteurs de mot. Dans chaque cas, nous allons nous concentrer sur la création des caractéristiques. Nous utiliserons pour commencer des algorithmes d'apprentissage relativement simples.
 
 \subsection{Sac de mots}
 
-% Citer la première utilisation des sacs de mots
+Les sacs de mots \cite{Salton:1986:IMI:576628} est une représentation très simple. Numérotons les éléments de $V$, on a alors $V={w_{1}, ..., w_{D}}$. Prenons un texte $t \in V^{*}$ et notons $tf_{i,t} = card(\{j, t_{j}=w_{i}\})$ le nombre d’occurrences du mot $w_{i}$ dans le texte $t$. Le sac de mots d'un texte $t$ est le vecteur $b$ de $\mathbb{R}^{D}$ tel que $\forall i \in {1, ..., D}, b_{i} = tf_{i,t}$. Autrement dit, la $i^{e}$ coordonnée du sac de mots de $t$ est le nombre d’occurrences du mot $w_{i}$ dans $t$. Par exemple, si l'on considère les deux phrases suivantes :
+\begin{align*}
+S_{1} & = "\text{Bob aime les films d'action.}" \\
+S_{2} & = "\text{Alice préfère les films d'amour.}"
+\end{align*}
+Le vocabulaire commun aux deux phrases est :
+$$
+V = \{\text{Bob}, \text{aime}, \text{les}, \text{films}, \text{d}, \text{action}, \text{Alice}, \text{préfère}, \text{amour}\}
+$$
+En numérotant les mots dans l'ordre affiché ci-dessus, on a alors que les sacs de mots associés aux phrases $S_{1}$ et $S_{2}$ sont :
+\begin{align*}
+b_{1} & = (1, 1, 1, 1, 1, 1, 0, 0, 0)^{T} \\
+b_{2} & = (0, 0, 1, 1, 1, 0, 1, 1, 1)^{T}
+\end{align*}
 
-Les sacs de mots est une représentation très simple. Numérotons les éléments de $V$, on a alors $V={w_{1}, ..., w_{M}}$. Le sac de mots d'un texte $t \in V^{*}$ est un vecteur $b$ de $\mathbb{R}^{M}$ tel que $\forall i \in {1, ..., M}, b_{i} = card(\{j, t_{j}=w_{i}\})$. Autrement dit, la coordonnée $i$ du sac de mots de $t$ est le nombre d’occurrences du mot $w_{i}$ dans $t$.
+Afin d'obtenir des sacs de mots, nous avons nettoyé les critiques en enlevant le code HTML et en remplaçant la ponctuation par des espaces. Ensuite, nous avons utilisé les espaces pour découper les mots. Puis nous avons limité notre vocabulaire aux 5000 mots les plus courants afin d'avoir des vecteurs de taille raisonnable.
 
-% Exemples
+Nous avons choisi de commencer nos tests en utilisant la régression logistique et les forêts aléatoires. Ces deux algorithmes ont l'avantage d'être facile à mettre en place et sont relativement rapide. De plus, ils sont relativement différents dans leur fonctionnement. La régression logistique modélise seulement une interaction linéaire entre les composantes du vecteur d'entrée contrairement aux forêts aléatoire. Cependant, on peut interpréter les coefficients de la régression logistique ce qui n'est pas possible pour les forêts aléatoires. On peut retrouver les différents résultats sur la figure \ref{results_bow}.
 
-% Résultats (précision, matrice de confusion)
+\begin{figure}
+\begin{center}
+\begin{tabular}{|l|c|}
+	\hline
+	Forêt aléatoire à 100 estimateurs + BOW & 0.84356 \\
+	\hline
+	Forêt aléatoire à 100 estimateurs + BOW + TF-IDF & 0.83952 \\
+	\hline
+	Régression logistique + BOW & 0.84748 \\
+	\hline
+	Régression logistique + BOW + TF-IDF & 0.88308 \\
+	\hline
+\end{tabular}
+\caption{Précisions des sacs de mots pour différents algorithmes (BOW : sacs de mots, TF-IDF : sacs de mots pondérés par IDF)}
+\label{results_bow}
+\end{center}
+\end{figure}
 
-% Schéma d'une régression logistique
+Nous avons testé une variante des sacs de mots qui améliore significativement les résultats avec la régression logistique. Les composantes des sacs de mots sont maintenant pondérées par une mesure de la rareté d'un mot, IDF \cite{Salton:1986:IMI:576628} que l'on définit comme suit :
+$$
+\forall i \in \{1, ..., D\}, idf_{i} = log(\frac{N}{N_{i}})
+$$
+où $N_{i} = card{k, tf_{i, x_{k}} > 0}$ est le nombre de critiques qui contiennent le mot $w{i}$. La $i_{e}$ composante du sac de mot d'un texte $t$ est alors $b_{i} = tf_{i,t} \times idf_{i}$. 
 
-Les classifieurs bayésiens naïfs et la régression logistique ont comme avantage qu'il est possible d'interpréter le modèle après entraînement. Ainsi dans un classifieur bayésien naïf, on a accès à la probabilité $P(S=1|w \in t)$. Avec la régression logistique, a chaque mot est associé un poids. On peut interpréter le poids associer à chaque mot comme le sentiment que porte le mot, seul. Dans les figures \ref{negative} et \ref{positive}, on retrouve les mots jugés les plus négatifs et les plus négatifs par la régression logistique.
+On peut retrouver sur la figure \ref{confusion_matrices_bow}, les matrices de confusion pour la régression logistique et les forêts aléatoires. On remarque qu'il y a environ autant de faux positif que de faux négatifs.
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{cc}
+\begin{tabular}{|c|c|c|c|}
+   \hline
+   \multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{Sentiment prédit} \\
+   \cline{3-4}
+   \multicolumn{2}{|c|}{} & 0     & 1 \\
+   \hline
+   Sentiment          & 0 & 10674 & 1826 \\
+   \cline{2-4}
+   réel               & 1 & 1987  & 10513 \\
+   \hline
+\end{tabular} &
+\begin{tabular}{|c|c|c|c|}
+   \hline
+   \multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{Sentiment prédit} \\
+   \cline{3-4}
+   \multicolumn{2}{|c|}{} & 0     & 1 \\
+   \hline
+   Sentiment          & 0 & 10692 & 1808 \\
+   \cline{2-4}
+   réel               & 1 & 2103  & 10397 \\
+   \hline
+\end{tabular}
+\end{tabular}
+\end{center}
+\caption{Matrice de confusion de la régression logistique et des forêts aléatoires pour des sacs de mots.}
+\label{confusion_matrices_bow}
+\end{figure}
+
+La régression logistique a comme avantage qu'il est possible d'interpréter le modèle après apprentissage. Ainsi dans la régression logistique, à chaque mot est associé un poids. Et pour émettre une prédiction, le classifieur fait une combinaison linéaire des ces poids comme sur la figure \ref{lr_net}. On peut alors interpréter le poids associé à chaque mot comme le sentiment que porte ce mot, seul. Dans les figures \ref{negative} et \ref{positive}, on retrouve les mots jugés les plus négatifs et les plus négatifs par la régression logistique.
+
+\begin{figure}
+\begin{center}
+\input{"images/lr_net.tex"}
+\end{center}
+\caption{Représentation d'une régression logistique sous forme de réseau.}
+\label{lr_net}
+\end{figure}
+
+% J'ai oublié de mettre le biais ...
 
 \begin{figure}[h]
 \begin{verbatim}
@@ -90,8 +191,6 @@ Les classifieurs bayésiens naïfs et la régression logistique ont comme avanta
 \caption{Les 10 mots ayant les poids associés les plus positifs}
 \label{positive}
 \end{figure}
-
-
 
 \subsection{Vecteurs de mots}
 

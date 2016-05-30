@@ -9,6 +9,8 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.decomposition import PCA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import matplotlib.pyplot as plt
 
 # Loading dataset
@@ -71,7 +73,7 @@ def get_sentences(reviews):
 # Learning
 
 def train_classifier(algorithm, features, train):
-    print('Train classifier...')
+    print('Train classifier ({})...'.format(algorithm))
     estimators = []
     if 'rf' in algorithm:
         estimators.append(('rf', RandomForestClassifier(n_estimators=100)))
@@ -125,3 +127,23 @@ def show_learning_curve(algorithm, train_features, train, test_features, test):
     plt.ylim(0, 1)
     plt.ylabel('accuracy')
     plt.show()
+
+def plot_pca(X, y):
+    colors = ['b', 'r']
+    pca = PCA(n_components=2)
+    X_r = pca.fit(X).transform(X)
+    plt.figure()
+    for i, c in enumerate(colors):
+        plt.scatter(X_r[y == i, 0], X_r[y == i, 1], c=c, label=str(i))
+    plt.legend()
+    plt.title('PCA')
+
+def plot_lda(X, y):
+    colors = ['b', 'r']
+    lda = LinearDiscriminantAnalysis(n_components=2)
+    X_r = lda.fit(X, y).transform(X)
+    plt.figure()
+    for i, c in enumerate(colors):
+        plt.scatter(X_r[y == i, 0], X_r[y == i, 1], c=c, label=str(i))
+    plt.legend()
+    plt.title('PCA')

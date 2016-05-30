@@ -1,11 +1,12 @@
 import pickle
 import os
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from util import *
 
 def train_vectorizer(reviews):
     print('Learning vocabulary...')
-    vectorizer = CountVectorizer(analyzer='word', stop_words=None, max_features=5000)
+    #vectorizer = CountVectorizer(analyzer='word', stop_words=None, max_features=5000)
+    vectorizer = TfidfVectorizer(analyzer='word', stop_words=None, max_features=5000)
     vectorizer.fit(reviews)
     return vectorizer
 
@@ -16,11 +17,11 @@ def get_features(reviews, vectorizer):
 def get_word_features(word, vectorizer):
     return vectorizer.transform([word]).toarray().flatten()
 
-def get_bag_of_words(reviews, filename, vectorizer=None):
-    if os.path.exists(filename):
+def get_bag_of_words(reviews, filename, vectorizer=None, force=False):
+    if not force and os.path.exists(filename):
         print('Creating bag of words skipped - ' + filename + ' exists')
     else:
-        clean_reviews = get_clean_reviews(reviews['review'], join_words=True)
+        clean_reviews = get_clean_reviews(reviews['review'], keep_stop_words=True, join_words=True)
         if not vectorizer:
             vectorizer = train_vectorizer(clean_reviews)
         features = get_features(clean_reviews, vectorizer)
@@ -31,7 +32,7 @@ def get_bag_of_words(reviews, filename, vectorizer=None):
 
 def predict(algorithm):
     train = get_reviews('data/imdb/train_data.csv')
-    train_features, vectorizer = get_bag_of_words(train, 'data/imdb/train_data_bow.pickle')
+    train_features, vectorizer = get_bag_of_words(train, 'data/imdb/train_data_bow.pickle', force=False)
 
     classifier = train_classifier(algorithm, train_features, train)
 
@@ -40,7 +41,7 @@ def predict(algorithm):
     del train_features
 
     test = get_reviews('data/imdb/test_data.csv')
-    test_features, _ = get_bag_of_words(test, 'data/imdb/test_data_bow.pickle', vectorizer)
+    test_features, _ = get_bag_of_words(test, 'data/imdb/test_data_bow.pickle', vectorizer, force=False)
 
     evaluate(test_features, test, classifier)
 
@@ -87,4 +88,10 @@ def get_learning_curve(algorithm):
 
     show_learning_curve(algorithm, train_features, train, test_features, test)
 
-get_learning_curve('lr')
+def plot_bag_of_words():
+    train = get_reviews('data/imdb/train_data.csv')
+    train_features, vectorizer = get_bag_of_words(train, 'data/imdb/train_data_bow.pickle')
+    plot_pca(train_features, train['sentiment'])
+    plot_lda(train_features, train['sentiment'])
+
+predict('rf')
