@@ -11,6 +11,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 
 # Loading dataset
@@ -147,3 +148,14 @@ def plot_lda(X, y):
         plt.scatter(X_r[y == i, 0], X_r[y == i, 1], c=c, label=str(i))
     plt.legend()
     plt.title('PCA')
+
+def plot_tsne(labels, embeddings):
+    num_points = 400
+    tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
+    two_d_embeddings = tsne.fit_transform(embeddings[1:num_points+1, :])
+    #plt.figure(figsize=(10, 10))
+    for i, label in enumerate(labels[1:num_points+1]):
+        x, y = two_d_embeddings[i,:]
+        plt.scatter(x, y)
+        plt.annotate(label, xy=(x, y), xytext=(5, 2), textcoords='offset points', ha='right', va='bottom')
+    plt.show()

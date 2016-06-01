@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.30)  30 MAY 2016 20:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.30)  1 JUN 2016 16:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -785,26 +785,26 @@ File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
 ))) (./sentiment_analysis.aux)
 \openout1 = `sentiment_analysis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 14.
 
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \degres on input line 13.
-LaTeX Info: Redefining \dots on input line 13.
-LaTeX Info: Redefining \up on input line 13.
+LaTeX Info: Redefining \degres on input line 14.
+LaTeX Info: Redefining \dots on input line 14.
+LaTeX Info: Redefining \up on input line 14.
  ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -867,52 +867,52 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 15.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 16.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 15.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 16.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 15.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 16.
 
 
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 15.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 16.
 
 
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 15.
+(Font)              <12> on input line 16.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 15.
+(Font)              <8> on input line 16.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 15.
-LaTeX Font Info:    Try loading font information for U+msa on input line 15.
+(Font)              <6> on input line 16.
+LaTeX Font Info:    Try loading font information for U+msa on input line 16.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 15.
+LaTeX Font Info:    Try loading font information for U+msb on input line 16.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 23.
+(Font)              <10> on input line 24.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 23.
+(Font)              <7> on input line 24.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 23.
+(Font)              <5> on input line 24.
 
-Overfull \hbox (19.25888pt too wide) in paragraph at lines 25--26
+Overfull \hbox (19.25888pt too wide) in paragraph at lines 26--27
 \T1/lmr/m/n/10 pro-blème. La me-sure de per-for-mance choi-sie est la pré-ci-si
 on $\OML/lmm/m/it/10 A\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 y[]; :::; y[]; []; :::;
  []\OT1/lmr/m/n/10 ) =
@@ -921,164 +921,216 @@ on $\OML/lmm/m/it/10 A\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 y[]; :::; y[]; []; :::;
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 41.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 42.
 
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 []\T1/lmtt/m/n/10 Story of a man who has unnatural feelings
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 for a pig. Starts out with a opening scene
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 that is a terrific example of absurd
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 comedy. A formal orchestra audience is
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 turned into an insane, violent mob by
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 the crazy chantings of it's singers.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 Unfortunately it stays absurd the WHOLE
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 time with no general narrative eventually
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 making it just too off putting. Even those
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 from the era should be turned off. The
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 cryptic dialogue would make Shakespeare
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 seem easy to a third grader. On a technical
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 level it's better than you might think
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 with some good cinematography by future
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 great Vilmos Zsigmond. Future stars Sally
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 \T1/lmtt/m/n/10 Kirkland and Frederic Forrest can be seen
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 []\T1/lmtt/m/n/10 The plot had some wretched, unbelievable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 \T1/lmtt/m/n/10 twists. However, the chemistry between Mel
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 \T1/lmtt/m/n/10 Brooks and Leslie Ann Warren was excellent.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 \T1/lmtt/m/n/10 The insight that she comes to, ""There are
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 \T1/lmtt/m/n/10 just moments,"" provides a philosophical
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 \T1/lmtt/m/n/10 handle by which anyone could pick up, and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 \T1/lmtt/m/n/10 embrace, life.<br /><br />That was one
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 \T1/lmtt/m/n/10 of several moments that were wonderfully
  []
 
-[2] [3] [4] (./images/lr_net.tex
+[2] [3]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[4] (./images/lr_net.tex
 \du=\skip52
 )
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(./sentiment_analysis.bbl [5]) [6] (./sentiment_analysis.aux) ) 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/skip_gram.png, id=37, 301.125pt x 335.2525pt>
+File: images/skip_gram.png Graphic file (type png)
+
+<use images/skip_gram.png>
+Package pdftex.def Info: images/skip_gram.png used on input line 210.
+(pdftex.def)             Requested size: 301.12425pt x 335.25168pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5] <images/tsne_plot.png, id=42, 949.6278pt x 543.4704pt>
+File: images/tsne_plot.png Graphic file (type png)
+
+<use images/tsne_plot.png>
+Package pdftex.def Info: images/tsne_plot.png used on input line 220.
+(pdftex.def)             Requested size: 332.37471pt x 190.21748pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/cluster_cinema.png, id=43, 948.1824pt x 549.252pt>
+File: images/cluster_cinema.png Graphic file (type png)
+
+<use images/cluster_cinema.png>
+Package pdftex.def Info: images/cluster_cinema.png used on input line 229.
+(pdftex.def)             Requested size: 331.86882pt x 192.24107pt.
+
+<images/cluster_toolwords.png, id=44, 948.1824pt x 549.252pt>
+File: images/cluster_toolwords.png Graphic file (type png)
+
+<use images/cluster_toolwords.png>
+Package pdftex.def Info: images/cluster_toolwords.png used on input line 230.
+(pdftex.def)             Requested size: 331.86882pt x 192.24107pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6] [7 <./images/skip_gram.png>] (./sentiment_analysis.bbl
+Underfull \hbox (badness 1242) in paragraph at lines 12--15
+[]\T1/lmr/m/n/10 Tomas Mi-ko-lov, Kai Chen, Greg Cor-rado, and Jef-frey Dean.  
+Ef-fi-
+ []
+
+[8 <./images/tsne_plot.png>]) [9] [10 <./images/cluster_cinema.png> <./images/c
+luster_toolwords.png>] (./sentiment_analysis.aux) ) 
 Here is how much of TeX's memory you used:
- 14038 strings out of 494883
- 265666 string characters out of 6178693
- 302232 words of memory out of 5000000
- 17026 multiletter control sequences out of 15000+600000
- 62838 words of font info for 58 fonts, out of 8000000 for 9000
+ 14071 strings out of 494883
+ 266351 string characters out of 6178693
+ 306286 words of memory out of 5000000
+ 17051 multiletter control sequences out of 15000+600000
+ 68825 words of font info for 60 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  48i,15n,54p,950b,820s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texm
-f/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{
-/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/d
-vips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/
-share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/publ
-ic/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/shar
-e/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/l
-m/lmmi5.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb></usr/share/texmf
-/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.
-pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/t
-ype1/public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publ
-ic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/
-texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sentiment_analysis.pdf (6 pages, 260822 bytes).
+{/usr/share/texmf/fonts/enc/
+dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/t
+exmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-m
+athex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/share/texmf/
+fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12
+.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/font
+s/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb
+></usr/share/texmf/fonts/type1/public/lm/lmmi5.pfb></usr/share/texmf/fonts/type
+1/public/lm/lmmi7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public
+/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.p
+fb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></u
+sr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on sentiment_analysis.pdf (10 pages, 653803 bytes).
 PDF statistics:
- 97 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 128 PDF objects out of 1000 (max. 8388607)
+ 89 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

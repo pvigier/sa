@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: sentiment_analysis.aux
 The style file: plain.bst
 Database file #1: sentiment_analysis.bib
-You've used 2 entries,
+You've used 5 entries,
             2118 wiz_defined-function locations,
-            512 strings with 4569 characters,
-and the built_in function-call counts, 865 in all, are:
-= -- 84
-> -- 46
-< -- 1
-+ -- 18
-- -- 16
-* -- 60
-:= -- 143
-add.period$ -- 7
-call.type$ -- 2
-change.case$ -- 13
+            530 strings with 5128 characters,
+and the built_in function-call counts, 2024 in all, are:
+= -- 195
+> -- 110
+< -- 2
++ -- 43
+- -- 38
+* -- 140
+:= -- 331
+add.period$ -- 16
+call.type$ -- 5
+change.case$ -- 33
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 35
-empty$ -- 62
-format.name$ -- 16
-if$ -- 185
+cite$ -- 5
+duplicate$ -- 81
+empty$ -- 145
+format.name$ -- 38
+if$ -- 430
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 3
-newline$ -- 13
-num.names$ -- 4
-pop$ -- 19
+int.to.str$ -- 5
+missing$ -- 6
+newline$ -- 28
+num.names$ -- 10
+pop$ -- 40
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 29
 quote$ -- 0
-skip$ -- 25
+skip$ -- 63
 stack$ -- 0
-substring$ -- 42
-swap$ -- 11
-text.length$ -- 1
+substring$ -- 103
+swap$ -- 26
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 6
+type$ -- 18
 warning$ -- 0
-while$ -- 7
-width$ -- 3
-write$ -- 26
+while$ -- 17
+width$ -- 6
+write$ -- 58

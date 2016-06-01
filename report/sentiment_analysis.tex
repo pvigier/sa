@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{pgf,tikz}
+\usepackage{graphicx}
 	
 \title{Analyse de sentiments}
 \author{Frédéric \textsc{Wantiez} -- Pierre \textsc{Vigier}}
@@ -32,7 +33,7 @@ Il est assez facile de créer un ensemble de données pour entraîner nos algori
 
 Nous utilisons l'ensemble de données mis à disposition par Maas et al. \cite{maas-EtAl:2011:ACL-HLT2011}. Il s'agit d'un ensemble de 50 000 avis en anglais sur IMDB. Il est découpé en un ensemble d'apprentissage et un ensemble de test. À chaque avis est associé un label $0$ ou $1$ selon que l'avis est positif ou négatif. Le label $0$ correspond à une note inférieure à $4$ tandis que le label $1$ correspond à une note supérieure à $7$. Les notes de $5$ et $6$ sont exclues car représentant un avis neutre. Il y a autant d'avis positifs que d'avis négatifs dans l'ensemble d'apprentissage ainsi que dans l'ensemble de test. Dans la figure \ref{example_imdb}, on retrouve un avis négatif et un avis positif. On remarque que des fragments de code HTML et des libertés typographiques peuvent être présents.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \begin{tabular}{|c|c|p{80mm}|}
 	\hline
@@ -70,6 +71,8 @@ Nous allons commencer par utiliser deux représentations pour nos textes, la pre
 
 \subsection{Sac de mots}
 
+\subsubsection{Description}
+
 Les sacs de mots \cite{Salton:1986:IMI:576628} est une représentation très simple. Numérotons les éléments de $V$, on a alors $V={w_{1}, ..., w_{D}}$. Prenons un texte $t \in V^{*}$ et notons $tf_{i,t} = card(\{j, t_{j}=w_{i}\})$ le nombre d’occurrences du mot $w_{i}$ dans le texte $t$. Le sac de mots d'un texte $t$ est le vecteur $b$ de $\mathbb{R}^{D}$ tel que $\forall i \in {1, ..., D}, b_{i} = tf_{i,t}$. Autrement dit, la $i^{e}$ coordonnée du sac de mots de $t$ est le nombre d’occurrences du mot $w_{i}$ dans $t$. Par exemple, si l'on considère les deux phrases suivantes :
 \begin{align*}
 S_{1} & = "\text{Bob aime les films d'action.}" \\
@@ -87,9 +90,11 @@ b_{2} & = (0, 0, 1, 1, 1, 0, 1, 1, 1)^{T}
 
 Afin d'obtenir des sacs de mots, nous avons nettoyé les critiques en enlevant le code HTML et en remplaçant la ponctuation par des espaces. Ensuite, nous avons utilisé les espaces pour découper les mots. Puis nous avons limité notre vocabulaire aux 5000 mots les plus courants afin d'avoir des vecteurs de taille raisonnable.
 
+\subsubsection{Apprentissage}
+
 Nous avons choisi de commencer nos tests en utilisant la régression logistique et les forêts aléatoires. Ces deux algorithmes ont l'avantage d'être facile à mettre en place et sont relativement rapide. De plus, ils sont relativement différents dans leur fonctionnement. La régression logistique modélise seulement une interaction linéaire entre les composantes du vecteur d'entrée contrairement aux forêts aléatoire. Cependant, on peut interpréter les coefficients de la régression logistique ce qui n'est pas possible pour les forêts aléatoires. On peut retrouver les différents résultats sur la figure \ref{results_bow}.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \begin{tabular}{|l|c|}
 	\hline
@@ -102,7 +107,7 @@ Nous avons choisi de commencer nos tests en utilisant la régression logistique 
 	Régression logistique + BOW + TF-IDF & 0.88308 \\
 	\hline
 \end{tabular}
-\caption{Précisions des sacs de mots pour différents algorithmes (BOW : sacs de mots, TF-IDF : sacs de mots pondérés par IDF)}
+\caption{Précisions des sacs de mots avec différents algorithmes (BOW : sacs de mots, TF-IDF : sacs de mots pondérés par IDF)}
 \label{results_bow}
 \end{center}
 \end{figure}
@@ -115,7 +120,7 @@ où $N_{i} = card{k, tf_{i, x_{k}} > 0}$ est le nombre de critiques qui contienn
 
 On peut retrouver sur la figure \ref{confusion_matrices_bow}, les matrices de confusion pour la régression logistique et les forêts aléatoires. On remarque qu'il y a environ autant de faux positif que de faux négatifs.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \begin{tabular}{cc}
 \begin{tabular}{|c|c|c|c|}
@@ -148,7 +153,7 @@ On peut retrouver sur la figure \ref{confusion_matrices_bow}, les matrices de co
 
 La régression logistique a comme avantage qu'il est possible d'interpréter le modèle après apprentissage. Ainsi dans la régression logistique, à chaque mot est associé un poids. Et pour émettre une prédiction, le classifieur fait une combinaison linéaire des ces poids comme sur la figure \ref{lr_net}. On peut alors interpréter le poids associé à chaque mot comme le sentiment que porte ce mot, seul. Dans les figures \ref{negative} et \ref{positive}, on retrouve les mots jugés les plus négatifs et les plus négatifs par la régression logistique.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \input{"images/lr_net.tex"}
 \end{center}
@@ -158,7 +163,7 @@ La régression logistique a comme avantage qu'il est possible d'interpréter le 
 
 % J'ai oublié de mettre le biais ...
 
-\begin{figure}[h]
+\begin{figure}[h][h]
 \begin{verbatim}
 1. disappointment (-2.608113025883491)
 2. waste (-2.359417022384978)
@@ -175,7 +180,7 @@ La régression logistique a comme avantage qu'il est possible d'interpréter le 
 \label{negative}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h][h]
 \begin{verbatim}
 1. refreshing (2.214710766134065)
 2. vengeance (2.1735370232092186)
@@ -194,7 +199,72 @@ La régression logistique a comme avantage qu'il est possible d'interpréter le 
 
 \subsection{Vecteurs de mots}
 
-% Article de Mikolov
+\subsubsection{Description}
+
+Une autre approche est d'essayer de représenter les mots avec une représentation continue. Le premier avantage de cette méthode est de fournir une représentation compacte des mots. En effet, avec les sacs de mots, les entrées sont des vecteurs de taille $card(V)$ ce qui induit un grand nombre de paramètres dans les algorithmes d'apprentissage ensuite. Au contraire, avec les représentations continus, nous pouvons fixer arbitrairement la taille des vecteurs qui vont représenter les mots du vocabulaire. Plus le vecteur aura de coordonnées, plus la représentation sera fine. Nous avons pas exemple choisi des vecteurs de $\mathbb{R}^{300}$. Nous noterons dans la suite $v_{i}$ le vecteur de $\mathbb{R}^{300}$ associé au mot $w_{i}$ de $V$.
+
+Il existe de nombreuses méthodes pour générer de telles représentations, nous avons choisi le modèle Skip-gram proposé par Mikolov et al. \cite{mikolov2013efficient} \cite{mikolov2013distributed}. Le modèle consiste en un réseau de neurone, voir figure \ref{skip_gram}, où à partir d'un mot, nous essayons de prédire son contexte i.e. les mots qui l'entourent.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics{images/skip_gram.png}
+\caption{Réseau de neurones du modèle Skip-gram (source : Wikimedia).}
+\label{skip_gram}
+\end{center}
+\end{figure}
+
+Ce modèle a l'avantage de fournir de l'information syntaxique et sémantique sur les mots. En effet, des mots qui se retrouvent souvent dans des contextes similaires auront des vecteurs proches. Et s'ils se retrouvent dans les contextes similaires c'est qu'ils ont des fonctions grammaticales et des sens proches. Pour s'en apercevoir, nous avons projeté nos vecteurs dans $\mathbb{R}^{2}$ pour les visualiser en utilisant l'algorithme t-SNE \cite{van2008visualizing} qui préserve les voisinages (figure \ref{tsne_plot}).
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.35]{images/tsne_plot.png}
+\label{tsne_plot}
+\end{center}
+\end{figure}
+
+En particulier, on peut remarquer la présence de clusters de mots. En particulier, nous avons mis en évidence dans la figure \ref{clusters} un cluster de mots liés au cinéma \ref{clusters} et un autre contenant des mots-outils.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.35]{images/cluster_cinema.png} \\
+\includegraphics[scale=0.35]{images/cluster_toolwords.png}
+\label{clusters}
+\end{center}
+\end{figure}
+
+\subsubsection{Apprentissage}
+
+Nous avons donc une représentation des mots cependant, nous avons besoin de représenter des textes. Une solution simple est de faire une combinaison linéaire des vecteurs représentants les mots du texte. Comme pour les sacs de mots, plusieurs variantes s'offrent à nous. Nous pouvons supposer que tous les mots ont un poids égal, l'application associant à un texte $t$ sont vecteur sera alors définie par :
+$$
+h_{vec}(t) = \frac{\sum_{w_{i} \in t}{tf_{i, t}v_{i}}}{\sum_{w_{i} \in t}{tf_{i, t}}} 
+$$
+
+Cependant, on peut aussi considérer que les mots ont des poids différents selon leur rareté, et donc comme pour les sacs de mots, nous allons pondérer par l'$IDF$ :
+$$
+h_{vec+idf}(t) = \frac{\sum_{w_{i} \in t}{tf_{i, t}idf_{i}v_{i}}}{\sum_{w_{i} \in t}{tf_{i, t}idf_{i}}}
+$$
+
+De même que pour les sacs de mots, nous avons mesurer la précision de la régression logistique et des forêts aléatoires avec comme entrées des vecteurs de mot. On retrouvera ces résultats dans la figure \ref{results_vec}.
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{|l|c|}
+	\hline
+	Forêt aléatoire à 100 estimateurs + Vect & 0.7954 \\
+	\hline
+	Forêt aléatoire à 100 estimateurs + Vect + TF-IDF & 0.79416 \\
+	\hline
+	Régression logistique + Vect & 0.81652 \\
+	\hline
+	Régression logistique + Vect + TF-IDF & 0.81688 \\
+	\hline
+\end{tabular}
+\caption{Précisions des vecteurs de mot avec différents algorithmes (Vec : vecteurs de mots, TF-IDF : vecteurs de mot pondérés par IDF)}
+\label{results_vec}
+\end{center}
+\end{figure}
+
+Ici contrairement aux sacs de mots, la pondération des mots par l'$IDF$ n'offre aucune amélioration. Cela peut s'expliquer par le fait que des mots rares mais ne portant aucun sens utile pour l'analyse de sentiment vont diminuer l'importance d'autres mots importants pour l'analyse de sentiment mais plus courants. 
 
 \subsection{Conclusion}
 
