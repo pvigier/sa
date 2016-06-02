@@ -92,4 +92,16 @@ def show_tsne():
        embeddings[i,:] = model[word]
     plot_tsne(model.index2word, embeddings)
 
-predict('rf')
+def get_learning_curve(algorithm):
+    train = get_reviews('data/imdb/train_data.csv')
+    model = Word2Vec.load(model_name)
+    clean_train_reviews = get_clean_reviews(train['review'])
+    train_features = get_features(clean_train_reviews, model, num_features, with_idf=False)
+
+    test = get_reviews('data/imdb/test_data.csv')
+    clean_test_reviews = get_clean_reviews(test['review'])
+    test_features = get_features(clean_test_reviews, model, num_features)
+
+    show_learning_curve(algorithm, train_features, train, test_features, test)
+
+get_learning_curve('lr')

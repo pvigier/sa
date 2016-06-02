@@ -165,16 +165,17 @@ La régression logistique a comme avantage qu'il est possible d'interpréter le 
 
 \begin{figure}[h][h]
 \begin{verbatim}
-1. disappointment (-2.608113025883491)
-2. waste (-2.359417022384978)
-3. poorly (-2.3084246907186885)
-4. baldwin (-2.19419686645024)
-5. worst (-2.0717459858980107)
-6. unwatchable (-2.0580492805825648)
-7. obnoxious (-1.963499488620894)
-8. lacks (-1.9554003844434584)
-9. mst (-1.847654496703213)
-10. forgettable (-1.8287902091116428)
+NEGATIVE
+1. worst (-9.207327806842622)
+2. bad (-7.259958398881469)
+3. awful (-6.415897979257145)
+4. waste (-6.330645081158189)
+5. boring (-5.972322478351235)
+6. poor (-5.290181559864669)
+7. terrible (-4.680185463018839)
+8. worse (-4.432747319290786)
+9. nothing (-4.411951085231576)
+10. dull (-4.377273111550886)
 \end{verbatim}
 \caption{Les 10 mots ayant les poids associés les plus négatifs}
 \label{negative}
@@ -182,16 +183,16 @@ La régression logistique a comme avantage qu'il est possible d'interpréter le 
 
 \begin{figure}[h][h]
 \begin{verbatim}
-1. refreshing (2.214710766134065)
-2. vengeance (2.1735370232092186)
-3. flawless (2.0122553306253668)
-4. solo (1.7854059321112288)
-5. voight (1.7756433401722442)
-6. hooked (1.734909896519615)
-7. wonderfully (1.7229447269614802)
-8. existed (1.6963294241077245)
-9. appreciated (1.5982250466066845)
-10. stallone (1.5924422131212714)
+1. great (6.731768881148247)
+2. excellent (6.010829696751981)
+3. perfect (4.944364766157447)
+4. best (4.721911978651118)
+5. wonderful (4.516264655915644)
+6. amazing (4.08891536519038)
+7. today (3.6921102148583946)
+8. favorite (3.658223120278884)
+9. loved (3.589046275536792)
+10. well (3.5422155660495744)
 \end{verbatim}
 \caption{Les 10 mots ayant les poids associés les plus positifs}
 \label{positive}
@@ -218,6 +219,7 @@ Ce modèle a l'avantage de fournir de l'information syntaxique et sémantique su
 \begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.35]{images/tsne_plot.png}
+\caption{Projection des vecteurs de mots en 2D en utilisant l'algorithme t-SNE.}
 \label{tsne_plot}
 \end{center}
 \end{figure}
@@ -228,13 +230,14 @@ En particulier, on peut remarquer la présence de clusters de mots. En particuli
 \begin{center}
 \includegraphics[scale=0.35]{images/cluster_cinema.png} \\
 \includegraphics[scale=0.35]{images/cluster_toolwords.png}
+\caption{Un cluster contenant des mots liés au mot du cinéma et un autre contenant des mots-outils.}
 \label{clusters}
 \end{center}
 \end{figure}
 
 \subsubsection{Apprentissage}
 
-Nous avons donc une représentation des mots cependant, nous avons besoin de représenter des textes. Une solution simple est de faire une combinaison linéaire des vecteurs représentants les mots du texte. Comme pour les sacs de mots, plusieurs variantes s'offrent à nous. Nous pouvons supposer que tous les mots ont un poids égal, l'application associant à un texte $t$ sont vecteur sera alors définie par :
+Nous avons donc une représentation des mots cependant, nous avons besoin de représenter des textes. Une solution simple est de faire une combinaison linéaire des vecteurs représentants les mots du texte. Comme pour les sacs de mots, plusieurs variantes s'offrent à nous. Nous pouvons supposer que tous les mots ont un poids égal, l'application associant à un texte $t$ son vecteur sera alors définie par :
 $$
 h_{vec}(t) = \frac{\sum_{w_{i} \in t}{tf_{i, t}v_{i}}}{\sum_{w_{i} \in t}{tf_{i, t}}} 
 $$
@@ -250,13 +253,13 @@ De même que pour les sacs de mots, nous avons mesurer la précision de la régr
 \begin{center}
 \begin{tabular}{|l|c|}
 	\hline
-	Forêt aléatoire à 100 estimateurs + Vect & 0.7954 \\
+	Forêt aléatoire à 100 estimateurs + Vec & 0.7954 \\
 	\hline
-	Forêt aléatoire à 100 estimateurs + Vect + TF-IDF & 0.79416 \\
+	Forêt aléatoire à 100 estimateurs + Vec + TF-IDF & 0.79416 \\
 	\hline
-	Régression logistique + Vect & 0.81652 \\
+	Régression logistique + Vec & 0.81652 \\
 	\hline
-	Régression logistique + Vect + TF-IDF & 0.81688 \\
+	Régression logistique + Vec + TF-IDF & 0.81688 \\
 	\hline
 \end{tabular}
 \caption{Précisions des vecteurs de mot avec différents algorithmes (Vec : vecteurs de mots, TF-IDF : vecteurs de mot pondérés par IDF)}
@@ -268,15 +271,30 @@ Ici contrairement aux sacs de mots, la pondération des mots par l'$IDF$ n'offre
 
 \subsection{Conclusion}
 
-% Courbes d'apprentissage
+Afin d'y voir plus clair et avoir des pistes pour améliorer nos modèles, nous avons tracé des courbes d'apprentissages que l'on peut retrouver sur la figure \ref{learning_curves}.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.5]{images/learning_curve_lr_bow.png} \\
+\includegraphics[scale=0.5]{images/learning_curve_lr_vec.png}
+\caption{Évolution de la précision en fonction de la taille de l'ensemble d'apprentissage avec des sacs de mots en entrée (en haut) et des vecteurs de mots (en bas).}
+\label{learning_curves}
+\end{center}
+\end{figure}
+
+On remarque clairement, en particulier pour les sacs de mots, que le modèle n'apprend plus tôt dans l'apprentissage. Les modèles ont un grand biais. Pour améliorer notre précision rajouter des données est donc inutile, il nous faut choisir des modèles avec plus de variance i.e. avec plus de paramètres.
+
+Une source d'erreur plutôt intuitive est qu'on ne prend pas en compte l'ordre des mots. Par conséquent, nos modèles ne peuvent pas prendre en compte des structures grammaticales complexes. Par exemple, si nous classifions la phrase "It was not amazing.", qui est négative, avec le modèle de la régression logistique, nous obtenu le label $1$ qui signifie que la phrase est positive. C'est compréhensible car le modèle considère les mots indépendamment les uns des autres et le mot "amazing" a un poids positif et élevé. Une piste pour rajouter des paramètres à notre modèle est donc de prendre en compte l'ordre des mots.  
 
 % Il est possible de booster en faisant de l'apprentissage d'ensemble
 
-% Il est nécessaire de prendre en compte l'ordre des mots
+\clearpage
 
 \section{Prise en compte de l'ordre des mots}
 
 \section{Conclusion}
+
+\clearpage
 
 \bibliographystyle{plain}
 \bibliography{sentiment_analysis}

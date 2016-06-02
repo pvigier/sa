@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.30)  1 JUN 2016 16:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.30)  2 JUN 2016 18:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1058,79 +1058,103 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/skip_gram.png, id=37, 301.125pt x 335.2525pt>
+<images/skip_gram.png, id=36, 301.125pt x 335.2525pt>
 File: images/skip_gram.png Graphic file (type png)
 
 <use images/skip_gram.png>
-Package pdftex.def Info: images/skip_gram.png used on input line 210.
+Package pdftex.def Info: images/skip_gram.png used on input line 211.
 (pdftex.def)             Requested size: 301.12425pt x 335.25168pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[5] <images/tsne_plot.png, id=42, 949.6278pt x 543.4704pt>
+[5] <images/tsne_plot.png, id=41, 949.6278pt x 543.4704pt>
 File: images/tsne_plot.png Graphic file (type png)
 
 <use images/tsne_plot.png>
-Package pdftex.def Info: images/tsne_plot.png used on input line 220.
+Package pdftex.def Info: images/tsne_plot.png used on input line 221.
 (pdftex.def)             Requested size: 332.37471pt x 190.21748pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/cluster_cinema.png, id=43, 948.1824pt x 549.252pt>
+<images/cluster_cinema.png, id=42, 948.1824pt x 549.252pt>
 File: images/cluster_cinema.png Graphic file (type png)
 
 <use images/cluster_cinema.png>
-Package pdftex.def Info: images/cluster_cinema.png used on input line 229.
+Package pdftex.def Info: images/cluster_cinema.png used on input line 231.
 (pdftex.def)             Requested size: 331.86882pt x 192.24107pt.
 
-<images/cluster_toolwords.png, id=44, 948.1824pt x 549.252pt>
+<images/cluster_toolwords.png, id=43, 948.1824pt x 549.252pt>
 File: images/cluster_toolwords.png Graphic file (type png)
 
 <use images/cluster_toolwords.png>
-Package pdftex.def Info: images/cluster_toolwords.png used on input line 230.
+Package pdftex.def Info: images/cluster_toolwords.png used on input line 232.
 (pdftex.def)             Requested size: 331.86882pt x 192.24107pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[6] [7 <./images/skip_gram.png>] (./sentiment_analysis.bbl
+[6] [7 <./images/skip_gram.png>]
+<images/learning_curve_lr_bow.png, id=52, 586.8324pt x 442.2924pt>
+File: images/learning_curve_lr_bow.png Graphic file (type png)
+
+<use images/learning_curve_lr_bow.png>
+Package pdftex.def Info: images/learning_curve_lr_bow.png used on input line 27
+8.
+(pdftex.def)             Requested size: 293.41548pt x 221.14566pt.
+
+<images/learning_curve_lr_vec.png, id=53, 578.16pt x 433.62pt>
+File: images/learning_curve_lr_vec.png Graphic file (type png)
+
+<use images/learning_curve_lr_vec.png>
+Package pdftex.def Info: images/learning_curve_lr_vec.png used on input line 27
+9.
+(pdftex.def)             Requested size: 289.07928pt x 216.80946pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8 <./images/tsne_plot.png>] [9 <./images/cluster_cinema.png> <./images/cluster
+_toolwords.png>] [10 <./images/learning_curve_lr_bow.png> <./images/learning_cu
+rve_lr_vec.png>] [11
+
+] (./sentiment_analysis.bbl
 Underfull \hbox (badness 1242) in paragraph at lines 12--15
 []\T1/lmr/m/n/10 Tomas Mi-ko-lov, Kai Chen, Greg Cor-rado, and Jef-frey Dean.  
 Ef-fi-
  []
 
-[8 <./images/tsne_plot.png>]) [9] [10 <./images/cluster_cinema.png> <./images/c
-luster_toolwords.png>] (./sentiment_analysis.aux) ) 
+) [12
+
+] (./sentiment_analysis.aux) ) 
 Here is how much of TeX's memory you used:
- 14071 strings out of 494883
- 266351 string characters out of 6178693
- 306286 words of memory out of 5000000
- 17051 multiletter control sequences out of 15000+600000
- 68825 words of font info for 60 fonts, out of 8000000 for 9000
+ 14079 strings out of 494883
+ 266678 string characters out of 6178693
+ 306287 words of memory out of 5000000
+ 17059 multiletter control sequences out of 15000+600000
+ 65833 words of font info for 59 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  48i,15n,54p,950b,820s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/
-dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/t
-exmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-m
-athex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/share/texmf/
-fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12
-.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/font
-s/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb
-></usr/share/texmf/fonts/type1/public/lm/lmmi5.pfb></usr/share/texmf/fonts/type
-1/public/lm/lmmi7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/s
-hare/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public
-/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share/texm
-f/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.p
-fb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/t
-ype1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></u
-sr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sentiment_analysis.pdf (10 pages, 653803 bytes).
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/
+usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/
+lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share
+/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/share/texmf/fonts/type1/public/lm
+/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lme
+x10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fo
+nts/type1/public/lm/lmmi5.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb
+></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type
+1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy
+7.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on sentiment_analysis.pdf (12 pages, 667703 bytes).
 PDF statistics:
- 128 PDF objects out of 1000 (max. 8388607)
- 89 compressed objects within 1 object stream
+ 134 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 33 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
