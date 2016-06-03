@@ -2,6 +2,7 @@ import pickle
 import numpy as np
 import tensorflow as tf
 from gensim.models import Word2Vec
+from word2vec import *
 from util import get_reviews, get_clean_reviews
 
 """pickle_file = 'models/wordvect-128.pickle'
@@ -70,9 +71,22 @@ def reviews_to_dataset(reviews, sentiments):
         labels[i,0] = label
     return dataset, labels
 
+def train_word2vec(sentences):
+    print('Training word2vec model...')
+    words = []
+    for i, sentence in enumerate(sentences):
+        words += sentence
+        if (i+1) % 1000 == 0:
+            print('Sentence {}'.format(i+1))
+    word2vec(words, 50000, 100, 300, 1, 'models/wordvect-300.pickle')
+
 def fit():
-    train_reviews = get_reviews('data/imdb/train_data.csv')
-    train_dataset, train_labels = reviews_to_dataset(get_clean_reviews(train_reviews['review'], join_words=True), train_reviews['sentiment'])
+    train = get_reviews('data/imdb/train_data.csv')
+    sentences = get_sentences(train['review'])
+    embeddings = train_word2vec(sentences)
+
+
+    """train_dataset, train_labels = reviews_to_dataset(get_clean_reviews(train_reviews['review'], join_words=True), train_reviews['sentiment'])
     print('TRAIN:', train_dataset.shape, train_labels.shape)
     print(train_dataset, train_labels)
     
@@ -81,6 +95,6 @@ def fit():
     print('TEST:', test_dataset.shape, test_labels.shape)
     print(test_dataset, test_labels)
 
-    logistic_regression(train_dataset, train_labels, test_dataset, test_labels)
+    logistic_regression(train_dataset, train_labels, test_dataset, test_labels)"""
 
 fit()

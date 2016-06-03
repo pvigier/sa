@@ -5,7 +5,7 @@ import pickle
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from sklearn.manifold import TSNE
+from util import *
 
 def build_dataset(words, vocabulary_size):
     count = [('UNK', -1)]
@@ -27,27 +27,17 @@ def build_dataset(words, vocabulary_size):
     return data, count, dictionary, reverse_dictionary
 
 def generate_batch(data_index, data, batch_size, skip_window):
-    num_skips = 2 * skip_window
-    assert batch_size % num_skips == 0
     batch = np.ndarray(shape=(batch_size), dtype=np.int32)
-    labels = np.ndarray(shape=(batch_size, 1), dtype=np.int32)
-    span = 2 * skip_window + 1 
-    buffer = collections.deque(maxlen=span)
-    for _ in range(span):
-        buffer.append(data[data_index])
-        data_index = (data_index + 1) % len(data)
-    for i in range(batch_size // num_skips):
-        target = skip_window
-        targets_to_avoid = [ skip_window ]
-        for j in range(num_skips):
-            while target in targets_to_avoid:
-                target = random.randint(0, span - 1)
-            targets_to_avoid.append(target)
-            batch[i * num_skips + j] = buffer[skip_window]
-            labels[i * num_skips + j, 0] = buffer[target]
-        buffer.append(data[data_index])
-        data_index = (data_index + 1) % len(data)
-    return data_index, batch, labels
+    labels = np.ndarray(shape=(batch_size, 1, 2*skip_window), dtype=np.int32)
+    for i in range(batch_size):
+        if data_index + 2 * skip_window - 1 > len(data):
+            data_index = 0
+        target = data_index + skip_window + i
+        batch[i] = data[target]
+        for j in range(skip_window):
+            labels[i, 0, j] = data[target-j-1]
+            labels[i, 0, skip_window+j] = data[target+j+1]
+    return data_index + batch_size, batch, labels
 
 def fit(data, vocabulary_size, batch_size, embedding_size, skip_window):
     num_sampled = 64 # Number of negative examples to sample.
@@ -56,18 +46,23 @@ def fit(data, vocabulary_size, batch_size, embedding_size, skip_window):
     with graph.as_default(), tf.device('/cpu:0'):
         # Input data.
         train_dataset = tf.placeholder(tf.int32, shape=[batch_size])
-        train_labels = tf.placeholder(tf.int32, shape=[batch_size, 1])
+        train_labels = tf.placeholder(tf.int32, shape=[batch_size, 1, 2*skip_window])
       
         # Variables.
         embeddings = tf.Variable(tf.random_uniform([vocabulary_size, embedding_size], -1.0, 1.0))
-        softmax_weights = tf.Variable(tf.truncated_normal([vocabulary_size, embedding_size], stddev=1.0 / math.sqrt(embedding_size)))
-        softmax_biases = tf.Variable(tf.zeros([vocabulary_size]))
+        softmax_weights = []
+        softmax_biases = []
+        for i in range(2*skip_window):
+            softmax_weights.append(tf.Variable(tf.truncated_normal([vocabulary_size, embedding_size], stddev=1.0 / math.sqrt(embedding_size))))
+            softmax_biases.append(tf.Variable(tf.zeros([vocabulary_size])))
       
         # Model.
         # Look up embeddings for inputs.
         embed = tf.nn.embedding_lookup(embeddings, train_dataset)
         # Compute the softmax loss, using a sample of the negative labels each time.
-        loss = tf.reduce_mean(tf.nn.sampled_softmax_loss(softmax_weights, softmax_biases, embed, train_labels, num_sampled, vocabulary_size))
+        loss = tf.Variable(0, trainable=False, dtype=tf.float32)
+        for i in range(2*skip_window):
+            loss = tf.add(loss, tf.reduce_mean(tf.nn.sampled_softmax_loss(softmax_weights[i], softmax_biases[i], embed, train_labels[:, :, i], num_sampled, vocabulary_size)))
 
         # Optimizer.
         optimizer = tf.train.AdagradOptimizer(1.0).minimize(loss)
@@ -93,7 +88,7 @@ def fit(data, vocabulary_size, batch_size, embedding_size, skip_window):
                 if step > 0:
                     average_loss = average_loss / 2000
                 # The average loss is an estimate of the loss over the last 2000 batches.
-                print('Average loss at step %d: %f' % (step, average_loss))
+                print('Average loss at step %d: %f' % (step, average_loss / (2*skip_window)))
                 average_loss = 0
         return normalized_embeddings.eval()
 
@@ -102,27 +97,18 @@ def word2vec(words, vocabulary_size, batch_size, embedding_size, skip_window, fi
     embeddings = fit(data, vocabulary_size, batch_size, embedding_size, skip_window)
     pickle.dump(([reverse_dictionary[i] for i in range(1, len(reverse_dictionary))], embeddings), open(filename, 'wb'))
 
-def show_tsne(labels, embeddings):
-    num_points = 400
-    tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
-    two_d_embeddings = tsne.fit_transform(embeddings[1:num_points+1, :])
-    plt.figure(figsize=(10, 10))
-    for i, label in enumerate(labels[1:num_points+1]):
-        x, y = two_d_embeddings[i,:]
-        plt.scatter(x, y)
-        plt.annotate(label, xy=(x, y), xytext=(5, 2), textcoords='offset points', ha='right', va='bottom')
-    plt.show()
-
 import zipfile
 
 def read_data():
     """Extract the first file enclosed in a zip file as a list of words"""
     with zipfile.ZipFile('text8.zip') as f:
         data = tf.compat.as_str(f.read(f.namelist()[0])).split()
+        print(type(data), data[:1000])
     return data
 
-filename = 'models/wordvect-300.pickle'
-#words = read_data()
-#word2vec(words, 50000, 100, 128, 1, filename)
-labels, embeddings = pickle.load(open(filename, 'rb'))
-show_tsne(labels, embeddings)
+if __name__ == '__main__': 
+    filename = 'models/wordvect-128.pickle'
+    words = read_data()
+    word2vec(words, 50000, 100, 128, 1, filename)
+    labels, embeddings = pickle.load(open(filename, 'rb'))
+    plot_tsne(labels, embeddings)

@@ -36,13 +36,13 @@ def get_words(s):
 def remove_stop_words(words):
     return [w for w in words if not w in stops]
 
-def review_to_words(review, keep_stop_words=False):
+def review_to_words(review, keep_stop_words=True):
     words = get_words(remove_punct(remove_html(review)))
     if not keep_stop_words:
         words = remove_stop_words(words)
     return words
 
-def get_clean_reviews(reviews, keep_stop_words=False, join_words=False):
+def get_clean_reviews(reviews, keep_stop_words=True, join_words=False):
     print('Cleaning and parsing the set of movie reviews...')
     clean_train_reviews = []
     for i, review in enumerate(reviews):

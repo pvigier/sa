@@ -6,7 +6,7 @@ from util import *
 def train_vectorizer(reviews, r=(1, 1)):
     print('Learning vocabulary {}...'.format(str(r)))
     #vectorizer = CountVectorizer(analyzer='word', stop_words=None, max_features=5000)
-    vectorizer = TfidfVectorizer(analyzer='word', ngram_range=r, stop_words=None, max_features=10000)
+    vectorizer = TfidfVectorizer(analyzer='word', ngram_range=r, stop_words=None, max_features=30000)
     vectorizer.fit(reviews)
     return vectorizer
 
@@ -22,10 +22,10 @@ def get_bag_of_words(reviews, filename, vectorizer=None, force=False, r=(1, 1)):
         if not vectorizer:
             vectorizer = train_vectorizer(clean_reviews, r)
         features = get_features(clean_reviews, vectorizer)
-        with open(filename, 'wb') as f:
-            pickle.dump(features, f)
-    return pickle.load(open(filename, 'rb')), vectorizer
-
+        #with open(filename, 'wb') as f:
+        #    pickle.dump(features, f)
+    #return pickle.load(open(filename, 'rb')), vectorizer
+    return features, vectorizer
 
 def predict(algorithm, r=(1, 1)):
     train = get_reviews('data/imdb/train_data.csv')
@@ -99,4 +99,4 @@ def plot_bag_of_words():
     plot_pca(train_features, train['sentiment'])
     plot_lda(train_features, train['sentiment'])
 
-predict('lr', r=(1, 1))
+predict('lr', r=(1, 3))
