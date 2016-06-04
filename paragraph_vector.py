@@ -2,10 +2,8 @@ import logging
 import os
 import numpy as np
 import random
-from gensim import utils
 from gensim.models.doc2vec import LabeledSentence
 from gensim.models import Doc2Vec
-from sklearn.feature_extraction.text import TfidfVectorizer
 from util import *
 
 # Set values for various parameters
