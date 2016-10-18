@@ -19,11 +19,13 @@
 
 \subsection{Intérêt}
 
+L'analyse de sentiments, \textit{sentiment analysis} ou \textit{opinion mining} en anglais, est l'extraction d'information subjective dans une source textuelle. En d'autres mots, l'analyse de sentiments consiste à dire si un texte dégage un sentiment positif ou négatif. Ce procédé est déjà utilisé de manière industrielle. En marketing, il permet de déceler les promoteurs et les détracteurs d'un produit ou d'une marque. Une autre application importante est le minage des réseaux sociaux comme Twitter et des blogs afin de prédire des mouvements de marché ou la popularité d'un produit.
+
 \subsection{Formalisation}
 
-L'analyse de sentiments est un problème d'apprentissage supervisé. Notons $V$ l'ensemble de tous les mots possibles et $V^{*}=\cup_{n \geq 0}{V^{n}}$ l'ensemble des textes sur ce vocabulaire. Soit $x_{1}, ..., x_{N} \in V^{*}$ des textes et $y_{1}, ..., y_{N} \in S$ le sentiment associé à chacun des textes. Ces sentiments peuvent être des valeurs dans $S=[0, 1]$ où $0$ signifie que le texte est "très négatif" et $1$, "très positif". Une variante plus simple est d'avoir les $(y_{i})_{i \in {1, ..., N}}$ dans $S={0, 1}$ où 0 signifie "négatif" et $1$, "positif". Notre objectif est de déterminer une fonction $f$ telle que $\forall i \in {1, ..., N}, y_{i} \approx f(x_{i})$ et qui devra, de plus, bien généraliser sur des textes jamais vus auparavant. Dans le cas où $S$ est discret, il s'agit d'un problème de classification. Dans le cas continu, il s'agit d'un problème de régression.
+L'analyse de sentiments est un problème d'apprentissage supervisé. Notons $V$ l'ensemble de tous les mots possibles et $V^{*}=\cup_{n \geq 0}{V^{n}}$ l'ensemble des textes sur ce vocabulaire. Soit $x_{1}, ..., x_{N} \in V^{*}$ des textes et $y_{1}, ..., y_{N} \in S$ le sentiment associé à chacun des textes. Ces sentiments peuvent être des valeurs dans $S=[0, 1]$ où $0$ signifie que le texte est "très négatif" et $1$, "très positif". Une variante plus simple est d'avoir les $(y_{i})_{i \in {1, ..., N}}$ dans $S=\{0, 1\}$ où 0 signifie "négatif" et $1$, "positif". Notre objectif est de déterminer une fonction $f$ telle que $\forall i \in {1, ..., N}, y_{i} \approx f(x_{i})$ et qui devra, de plus, bien généraliser sur des textes jamais vus auparavant. Dans le cas où $S$ est discret, il s'agit d'un problème de classification. Dans le cas continu, il s'agit d'un problème de régression.
 
-Nous allons essentiellement nous concentrer sur le problème de classification. Plusieurs types d'entrée et plusieurs types de classifieurs seront essayés sur le problème. La mesure de performance choisie est la précision $A(y_{1}, ..., y_{N}, \hat{y}_{1}, ..., \hat{y}_{N}) = \frac{\sum_{i=0}^{N}{1_{y_{i}=\hat{y}_{i}}}}{N}$. L'objectif est de la maximiser. Elle nous permettra de comparer les performances des différents algorithmes.
+Nous allons essentiellement nous concentrer sur le problème de classification. Plusieurs types d'entrée et plusieurs types de classifieurs seront essayés sur le problème. La mesure de performance choisie est la précision $A(y_{1}, ..., y_{N}, \hat{y}_{1}, ..., \hat{y}_{N}) = \frac{1}{N}\sum_{i=0}^{N}{1_{y_{i}=\hat{y}_{i}}}$. Il s'agit du taux de textes bien classifiés. On remarquera que nous utilisons le terme "précision" pour traduire le terme "accuracy" anglais et qu'il ne s'agit pas de la précision comme définie en recherche d'information. L'objectif est de la maximiser. Elle nous permettra de comparer les performances des différents algorithmes. De plus, nous regarderons parfois des matrices des confusions et des courbes ROC pour avoir plus d'information.
 
 \section{Données}
 
@@ -31,7 +33,7 @@ Il est assez facile de créer un ensemble de données pour entraîner nos algori
 
 % Comment on détermine le sentiment sur les tweets ?
 
-Nous utilisons l'ensemble de données mis à disposition par Maas et al. \cite{maas-EtAl:2011:ACL-HLT2011}. Il s'agit d'un ensemble de 50 000 avis en anglais sur IMDB. Il est découpé en un ensemble d'apprentissage et un ensemble de test. À chaque avis est associé un label $0$ ou $1$ selon que l'avis est positif ou négatif. Le label $0$ correspond à une note inférieure à $4$ tandis que le label $1$ correspond à une note supérieure à $7$. Les notes de $5$ et $6$ sont exclues car représentant un avis neutre. Il y a autant d'avis positifs que d'avis négatifs dans l'ensemble d'apprentissage ainsi que dans l'ensemble de test. Dans la figure \ref{example_imdb}, on retrouve un avis négatif et un avis positif. On remarque que des fragments de code HTML et des libertés typographiques peuvent être présents.
+Nous utilisons l'ensemble de données mis à disposition par Maas et al. \cite{maas-EtAl:2011:ACL-HLT2011}. Il s'agit d'un ensemble de 50 000 avis en anglais sur IMDB. Il est découpé en un ensemble d'apprentissage et un ensemble de test. À chaque avis est associé un label $0$ ou $1$ selon que l'avis est négatif ou positif. Le label $0$ correspond à une note inférieure à $4$ tandis que le label $1$ correspond à une note supérieure à $7$. Les notes de $5$ et $6$ sont exclues car représentant un avis neutre. Il y a autant d'avis positifs que d'avis négatifs dans l'ensemble d'apprentissage ainsi que dans l'ensemble de test. Dans la figure \ref{example_imdb}, on retrouve un avis négatif et un avis positif. On remarque que des fragments de code HTML et des libertés typographiques peuvent être présents.
 
 \begin{figure}[h]
 \begin{center}
@@ -61,9 +63,9 @@ Afin de mener notre étude, nous avons choisi d'utiliser le langage Python (vers
 	\item \textit{NLTK} pour manipuler le langage naturel.
 \end{itemize}
 
-Nous allons devoir faire face à plusieurs difficultés. Premièrement, nous devons prétraiter les avis en enlevant le code HTML. Nous devrons aussi réussir à modéliser les avis, qui sont des chaînes de caractères de taille variable, par des caractéristiques permettant d'utiliser des algorithmes d'apprentissage. La plupart d'entre eux nécessitant des entrées de taille fixe et numériques. Finalement, nous verrons que réussir à modéliser l'ordre des mots sera une nécessité pour atteindre améliorer la précision de la classification.
+Nous allons devoir faire face à plusieurs difficultés. Premièrement, nous devons prétraiter les avis en enlevant le code HTML. Nous devrons aussi réussir à modéliser les avis, qui sont des chaînes de caractères de taille variable, par des caractéristiques permettant d'utiliser des algorithmes d'apprentissage. La plupart d'entre eux nécessitant des entrées de taille fixe et numériques. Finalement, nous verrons que réussir à modéliser l'ordre des mots sera une nécessité pour améliorer la précision de la classification.
 
-Notre démarche est assez simple, nous allons procéder par complexité croissante. Nous allons commencer par utiliser les modèles et algorithmes les plus "naïfs" puis analyser faiblesses de chaque  méthode afin d'avancer et proposer des solutions pour améliorer nos résultats.
+Notre démarche est assez simple, nous allons procéder par complexité croissante. Nous allons commencer par utiliser les modèles et algorithmes les plus "naïfs" puis analyser les faiblesses de chaque  méthode afin d'avancer et proposer des solutions pour améliorer nos résultats.
 
 \section{Premières tentatives}
 
@@ -73,7 +75,7 @@ Nous allons commencer par utiliser deux représentations pour nos textes, la pre
 
 \subsubsection{Description}
 
-Les sacs de mots \cite{Salton:1986:IMI:576628} est une représentation très simple. Numérotons les éléments de $V$, on a alors $V={w_{1}, ..., w_{D}}$. Prenons un texte $t \in V^{*}$ et notons $tf_{i,t} = card(\{j, t_{j}=w_{i}\})$ le nombre d’occurrences du mot $w_{i}$ dans le texte $t$. Le sac de mots d'un texte $t$ est le vecteur $b$ de $\mathbb{R}^{D}$ tel que $\forall i \in {1, ..., D}, b_{i} = tf_{i,t}$. Autrement dit, la $i^{e}$ coordonnée du sac de mots de $t$ est le nombre d’occurrences du mot $w_{i}$ dans $t$. Par exemple, si l'on considère les deux phrases suivantes :
+Les sacs de mots \cite{Salton:1986:IMI:576628} est une représentation très simple. Numérotons les éléments de $V$, on a alors $V=\{w_{1}, ..., w_{D}\}$. Prenons un texte $t \in V^{*}$ et notons $tf_{i,t} = card(\{j, t_{j}=w_{i}\})$ le nombre d’occurrences du mot $w_{i}$ dans le texte $t$. Le sac de mots d'un texte $t$ est le vecteur $b$ de $\mathbb{R}^{D}$ tel que $\forall i \in {1, ..., D}, b_{i} = tf_{i,t}$. Autrement dit, la $i^{e}$ coordonnée du sac de mots de $t$ est le nombre d’occurrences du mot $w_{i}$ dans $t$. Par exemple, si l'on considère les deux phrases suivantes :
 \begin{align*}
 S_{1} & = "\text{Bob aime les films d'action.}" \\
 S_{2} & = "\text{Alice préfère les films d'amour.}"
@@ -92,7 +94,7 @@ Afin d'obtenir des sacs de mots, nous avons nettoyé les critiques en enlevant l
 
 \subsubsection{Apprentissage}
 
-Nous avons choisi de commencer nos tests en utilisant la régression logistique et les forêts aléatoires. Ces deux algorithmes ont l'avantage d'être facile à mettre en place et sont relativement rapide. De plus, ils sont relativement différents dans leur fonctionnement. La régression logistique modélise seulement une interaction linéaire entre les composantes du vecteur d'entrée contrairement aux forêts aléatoire. Cependant, on peut interpréter les coefficients de la régression logistique ce qui n'est pas possible pour les forêts aléatoires. On peut retrouver les différents résultats sur la figure \ref{results_bow}.
+Nous avons choisi de commencer nos tests en utilisant la régression logistique et les forêts aléatoires. Ces deux algorithmes ont l'avantage d'être facile à mettre en place et sont relativement rapides. De plus, ils sont relativement différents dans leur fonctionnement. La régression logistique modélise seulement une interaction linéaire entre les composantes du vecteur d'entrée contrairement aux forêts aléatoires. Cependant, on peut interpréter les coefficients de la régression logistique ce qui n'est pas possible pour les forêts aléatoires. On peut retrouver les différents résultats sur la figure \ref{results_bow}.
 
 \begin{figure}[h]
 \begin{center}
@@ -116,7 +118,7 @@ Nous avons testé une variante des sacs de mots qui améliore significativement 
 $$
 \forall i \in \{1, ..., D\}, idf_{i} = log(\frac{N}{N_{i}})
 $$
-où $N_{i} = card{k, tf_{i, x_{k}} > 0}$ est le nombre de critiques qui contiennent le mot $w{i}$. La $i_{e}$ composante du sac de mot d'un texte $t$ est alors $b_{i} = tf_{i,t} \times idf_{i}$. 
+où $N_{i} = card(\{k, tf_{i, x_{k}} > 0\})$ est le nombre de critiques qui contiennent le mot $w_{i}$. La $i_{e}$ composante du sac de mot d'un texte $t$ est alors $b_{i} = tf_{i,t} \times idf_{i}$. 
 
 On peut retrouver sur la figure \ref{confusion_matrices_bow}, les matrices de confusion pour la régression logistique et les forêts aléatoires. On remarque qu'il y a environ autant de faux positif que de faux négatifs.
 
@@ -151,7 +153,7 @@ On peut retrouver sur la figure \ref{confusion_matrices_bow}, les matrices de co
 \label{confusion_matrices_bow}
 \end{figure}
 
-La régression logistique a comme avantage qu'il est possible d'interpréter le modèle après apprentissage. Ainsi dans la régression logistique, à chaque mot est associé un poids. Et pour émettre une prédiction, le classifieur fait une combinaison linéaire des ces poids comme sur la figure \ref{lr_net}. On peut alors interpréter le poids associé à chaque mot comme le sentiment que porte ce mot, seul. Dans les figures \ref{negative} et \ref{positive}, on retrouve les mots jugés les plus négatifs et les plus négatifs par la régression logistique.
+La régression logistique a comme avantage qu'il est possible d'interpréter le modèle après apprentissage. Ainsi dans la régression logistique, à chaque mot est associé un poids. Et pour émettre une prédiction, le classifieur fait une combinaison linéaire des ces poids comme sur la figure \ref{lr_net}. On peut alors interpréter le poids associé à chaque mot comme le sentiment que porte ce mot, seul. Dans les figures \ref{negative} et \ref{positive}, on retrouve les mots jugés les plus négatifs et les plus positifs par la régression logistique.
 
 \begin{figure}[h]
 \begin{center}
@@ -161,9 +163,7 @@ La régression logistique a comme avantage qu'il est possible d'interpréter le 
 \label{lr_net}
 \end{figure}
 
-% J'ai oublié de mettre le biais ...
-
-\begin{figure}[h][h]
+\begin{figure}[h]
 \begin{verbatim}
 NEGATIVE
 1. worst (-9.207327806842622)
@@ -181,8 +181,9 @@ NEGATIVE
 \label{negative}
 \end{figure}
 
-\begin{figure}[h][h]
+\begin{figure}[h]
 \begin{verbatim}
+POSITIVE
 1. great (6.731768881148247)
 2. excellent (6.010829696751981)
 3. perfect (4.944364766157447)
@@ -214,7 +215,7 @@ Il existe de nombreuses méthodes pour générer de telles représentations, nou
 \end{center}
 \end{figure}
 
-Ce modèle a l'avantage de fournir de l'information syntaxique et sémantique sur les mots. En effet, des mots qui se retrouvent souvent dans des contextes similaires auront des vecteurs proches. Et s'ils se retrouvent dans les contextes similaires c'est qu'ils ont des fonctions grammaticales et des sens proches. Pour s'en apercevoir, nous avons projeté nos vecteurs dans $\mathbb{R}^{2}$ pour les visualiser en utilisant l'algorithme t-SNE \cite{van2008visualizing} qui préserve les voisinages (figure \ref{tsne_plot}).
+Ce modèle a l'avantage de fournir de l'information syntaxique et sémantique sur les mots. En effet, des mots qui se retrouvent souvent dans des contextes similaires auront des vecteurs proches. Et s'ils se retrouvent dans des contextes similaires c'est qu'ils ont des fonctions grammaticales et des sens proches. Pour s'en apercevoir, nous avons projeté nos vecteurs dans $\mathbb{R}^{2}$ pour les visualiser en utilisant l'algorithme t-SNE \cite{van2008visualizing} qui préserve les voisinages (figure \ref{tsne_plot}).
 
 \begin{figure}[h]
 \begin{center}
@@ -224,7 +225,7 @@ Ce modèle a l'avantage de fournir de l'information syntaxique et sémantique su
 \end{center}
 \end{figure}
 
-En particulier, on peut remarquer la présence de clusters de mots. En particulier, nous avons mis en évidence dans la figure \ref{clusters} un cluster de mots liés au cinéma \ref{clusters} et un autre contenant des mots-outils.
+En particulier, on peut remarquer la présence de clusters de mots. Nous avons mis en évidence dans la figure \ref{clusters} un cluster de mots liés au cinéma \ref{clusters} et un autre contenant des mots-outils.
 
 \begin{figure}[h]
 \begin{center}
@@ -242,14 +243,14 @@ $$
 h_{vec}(t) = \frac{\sum_{w_{i} \in t}{tf_{i, t}v_{i}}}{\sum_{w_{i} \in t}{tf_{i, t}}} 
 $$
 
-Cependant, on peut aussi considérer que les mots ont des poids différents selon leur rareté, et donc comme pour les sacs de mots, nous allons pondérer par l'$IDF$ :
+Cependant, on peut aussi considérer que les mots ont des poids différents selon leur rareté, et donc comme pour les sacs de mots, nous allons pondérer par l'IDF :
 $$
 h_{vec+idf}(t) = \frac{\sum_{w_{i} \in t}{tf_{i, t}idf_{i}v_{i}}}{\sum_{w_{i} \in t}{tf_{i, t}idf_{i}}}
 $$
 
-De même que pour les sacs de mots, nous avons mesurer la précision de la régression logistique et des forêts aléatoires avec comme entrées des vecteurs de mot. On retrouvera ces résultats dans la figure \ref{results_vec}.
+De même que pour les sacs de mots, nous avons mesuré la précision de la régression logistique et des forêts aléatoires avec comme entrées des vecteurs de mot. On retrouvera ces résultats dans la figure \ref{results_vec}.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \begin{tabular}{|l|c|}
 	\hline
@@ -267,7 +268,7 @@ De même que pour les sacs de mots, nous avons mesurer la précision de la régr
 \end{center}
 \end{figure}
 
-Ici contrairement aux sacs de mots, la pondération des mots par l'$IDF$ n'offre aucune amélioration. Cela peut s'expliquer par le fait que des mots rares mais ne portant aucun sens utile pour l'analyse de sentiment vont diminuer l'importance d'autres mots importants pour l'analyse de sentiment mais plus courants. 
+Ici contrairement aux sacs de mots, la pondération des mots par l'IDF n'offre aucune amélioration. Cela peut s'expliquer par le fait que des mots rares mais ne portant aucun sens utile pour l'analyse de sentiments vont diminuer l'importance d'autres mots importants pour l'analyse de sentiments mais plus courants. 
 
 \subsection{Conclusion}
 
@@ -286,13 +287,139 @@ On remarque clairement, en particulier pour les sacs de mots, que le modèle n'a
 
 Une source d'erreur plutôt intuitive est qu'on ne prend pas en compte l'ordre des mots. Par conséquent, nos modèles ne peuvent pas prendre en compte des structures grammaticales complexes. Par exemple, si nous classifions la phrase "It was not amazing.", qui est négative, avec le modèle de la régression logistique, nous obtenu le label $1$ qui signifie que la phrase est positive. C'est compréhensible car le modèle considère les mots indépendamment les uns des autres et le mot "amazing" a un poids positif et élevé. Une piste pour rajouter des paramètres à notre modèle est donc de prendre en compte l'ordre des mots.  
 
-% Il est possible de booster en faisant de l'apprentissage d'ensemble
-
 \clearpage
 
 \section{Prise en compte de l'ordre des mots}
 
+\subsection{N-grammes}
+
+Les n-grammes, $n \in \mathbb{N}$, d'un texte $t$ sont les n-uplets de mots consécutifs de $t$. Considérons la phrase $t="\text{Bob aime les films d'action.}"$, les bigrammes ou 2-grammes de $t$ sont $\{(\text{Bob}, \text{aime}), (\text{aime}, \text{les}), (\text{les}, \text{films}), (\text{films}, \text{d}), (\text{d}, \text{action})\}$. Les n-grammes permettent de rendre compte de structures syntaxique comme "not like". Plus n est grand, plus nous pourrons modéliser des structures complexes. Cependant, le nombre de n-uplets croient rapidement avec n, en $O(card(V)^{n})$. Pour n grand, il y aura peu d’occurrences des n-uplets, ce ne seront donc pas des caractéristiques pertinents pour la classification. Nous nous limiterons donc à $n = 3$.
+
+Maintenant, nous pouvons faire des sacs de n-grammes à la place des sacs de mots, lesquels étaient des 1-grammes. Dans la pratique, nous n'allons pas considérer soit que les bi-grammes ou que les tri-grammes. Nous allons prendre les k-grammes pour $k \in \{1, 2, ..., n\}$ les plus courants. On retrouvera dans la figure \ref{results_ngram} les performances des n-grammes en entrée avec la régression logistique pour différents $n$, différentes valeurs du nombre de caractéristiques $C$, et en utilisant ou non TF-IDF. 
+
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+	\hline
+	C & n & TF-IDF & Précision \\
+	\hline
+	5000 & 1 & Non & 0.85164 \\
+	\hline
+	10000 & 1 & Non & 0.85432 \\
+	\hline
+	15000 & 1 & Non & 0.85664 \\
+	\hline
+	\hline
+	5000 & 2 & Non & 0.8582 \\
+	\hline
+	10000 & 2 & Non & 0.86844 \\
+	\hline
+	15000 & 2 & Non & 0.87544 \\
+	\hline
+	\hline
+	5000 & 1 & Oui & 0.88308 \\
+	\hline
+	10000 & 1 & Oui & 0.88364 \\
+	\hline
+	15000 & 1 & Oui & 0.88412 \\
+	\hline
+	\hline
+	5000 & 2 & Oui & 0.88848 \\
+	\hline
+	10000 & 2 & Oui & 0.89312 \\
+	\hline
+	15000 & 2 & Oui & 0.89432 \\
+	\hline
+	20000 & 2 & Oui & 0.8954 \\
+	\hline
+	30000 & 2 & Oui & 0.89564 \\
+	\hline
+\end{tabular}
+\caption{Précisions des sacs de n-grammes en entrée d'une régression logistique.}
+\label{results_ngram}
+\end{center}
+\end{figure}
+
+On remarque que si on prend que les 1-grammes, augmenter le nombre de caractéristiques n'améliore pas les performances. Par contre rajouter des bigrammes fait presque gagner $0.01$ de précision. Nous avons essayé avec des trigrammes mais ça ne donne pas de meilleurs résultats.
+
+\subsection{Vecteurs de paragraphe}
+
+Pour représenter nos textes entièrement, nous avons utilisé l'approche de Mikolov et al. \cite{le2014distributed} qui consiste à étendre le cadre de Word2vec à des morceaux entiers de textes comme des paragraphes ou des phrases. La démarche reste la même, le réseau essaie de prédire pour un contexte donné, le mot suivant. La différence réside néanmoins dans la présence d'une Paragraph Matrix, voir figure \ref{paragraph_vectors}, qui stocke l'information contenue dans le paragraphe.	
+Cette représentation offre l'interêt de nous fournir des représentations de taille fixe de nos textes. Nous obtenons ainsi des vecteurs de $\mathbb{R}^n$ avec $n=300$ que nous pouvons fournir à nos algorithmes d'apprentissage.
+\begin{figure}[h]
+\begin{center}
+\includegraphics{images/paragraph_vectors.png}
+\caption{Framework d'apprentissage des paragraph vectors (source : Mikolov et al. \cite{le2014distributed}).}
+\label{paragraph_vectors}
+\end{center}
+\end{figure}
+
+Le second avantage de cette représentation est qu'elle permet de prendre en compte l'ordre des mots de nos textes tout en gardant la sémantique des mots présents. Pour s'en convaincre, on peut analyser les représentations des mots obtenues avec ce modèle, que nous avons inclus dans la figure \ref{similarities}.
+\begin{figure}[h]
+\begin{verbatim}
+In[1]: model.most_similar('interesting')
+Out[1]:
+[('enjoyable', 0.549770712852478),
+ ('entertaining', 0.5360784530639648),
+ ('important', 0.5295416712760925),
+ ('intriguing', 0.4986931085586548),
+ ('amazing', 0.49587947130203247),
+ ('exciting', 0.4942770004272461),
+ ('excellent', 0.4942253828048706),
+ ('awesome', 0.46036389470100403),
+ ('amusing', 0.4536857306957245),
+ ('impressive', 0.448122501373291)]
+
+\end{verbatim}
+\caption{Les 10 mots les plus semblables à 'interesting' pour un modèle PV-DM avec moyenne.}
+\label{similarities}
+\end{figure}
+
+Grâce à cette représentation de nos textes, nous pouvons entraîner nos algorithmes de classification. L'article de Mikolov et al. présente plusieurs modèles, nous avons utilisé le PV-DM (Paragraph Vector with Distributed Memory) dans deux de ses variantes, l'une qui concatène les vecteurs de contextes et l'autre qui considère leur moyenne. Les résultats obtenus sont présentés dans le tableau \ref{results_pv}.
+
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{|l|c|}
+	\hline
+	Régression logistique + PV-DM (concat.) & 0.883 \\
+	\hline
+	Régression logistique + PV-DM (mean)  & 0.823 \\
+	\hline
+\end{tabular}
+\caption{Précision des paragraph vectors avec les deux variantes utilisées pour des vecteurs de dimension 300}
+\label{results_pv}
+\end{center}
+\end{figure} 
+
+On peut aussi regarder les courbes ROC pour comparer les deux variantes. Les courbes sont données figure \ref{pcdmconcat} et figure \ref{pcdmmean}
+\begin{figure}[h]
+\begin{center}
+\includegraphics{images/pvdmconcat.png}
+\caption{Courbe ROC pour le modèle PC-DM avec concaténation.}
+\label{pcdmconcat}
+\end{center}
+\end{figure}
+\clearpage
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics{images/pvdmmean.png}
+\caption{Courbe ROC pour le modèle PC-DM avec moyenne.}
+\label{pcdmmean}
+\end{center}
+\end{figure}
+
+\subsection{Derniers essais}
+
+Finalement, nous avons concaténé les sacs de n-grammes et les vecteurs de paragraphes. En prenant des sacs de n-grammes de longueur 10000 et des vecteurs de paragraphe de longueur 300 puis en les concaténant et en entraînant une régression logistique, nous obtenons une précision de $0.90116$, il s'agit de notre meilleur résultat.
+
 \section{Conclusion}
+
+Nous avons proposé différents modèles de complexité croissante pour résoudre le modèle. Nous avons vu que des méthodes très simples comme les sacs de mots donnent de très bons résultats. Puis qu'il est possible d'obtenir d'encore meilleurs résultats en prenant en compte l'ordre des mots.
+
+Une autre piste pour obtenir de meilleurs résultats que nous n'avons pas eu le temps de mettre en place est d'utiliser des réseaux de neurones récurrents comme les LSTM. L'avantage de ces réseaux est qu'ils prennent des entrées de taille variable, il n'y a donc pas besoin de créer des caractéristiques pour représenter une phrase ou un paragraphe.
+
+Au travers de ce projet, nous avons découvert une large palette des techniques utilisées en traitement automatique du langage naturel, ce qui a été très enrichissant. Nous nous sommes de plus familiarisés avec l'écosystème de l'apprentissage automatique sous Python.
 
 \clearpage
 

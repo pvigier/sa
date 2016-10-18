@@ -1,0 +1,12 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {french}
+\beamer@sectionintoc {1}{Description du probl\IeC {\`e}me}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Pr\IeC {\'e}sentation du probl\IeC {\`e}me}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Ensemble de donn\IeC {\'e}es}{7}{0}{1}
+\beamer@sectionintoc {2}{Premiers essais}{10}{0}{2}
+\beamer@subsectionintoc {2}{1}{Sacs de mots}{10}{0}{2}
+\beamer@subsectionintoc {2}{2}{Vecteurs de mots}{18}{0}{2}
+\beamer@sectionintoc {3}{Prise en compte de l'ordre des mots}{26}{0}{3}
+\beamer@subsectionintoc {3}{1}{N-grammes}{26}{0}{3}
+\beamer@subsectionintoc {3}{2}{Vecteurs de paragraphe}{30}{0}{3}
+\beamer@subsectionintoc {3}{3}{Derniers essais}{36}{0}{3}

@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{le2014distributed}
+Quoc~V Le and Tomas Mikolov.
+\newblock Distributed representations of sentences and documents.
+\newblock {\em arXiv preprint arXiv:1405.4053}, 2014.
+
 \bibitem{maas-EtAl:2011:ACL-HLT2011}
 Andrew~L. Maas, Raymond~E. Daly, Peter~T. Pham, Dan Huang, Andrew~Y. Ng, and
   Christopher Potts.
